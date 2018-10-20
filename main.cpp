@@ -4,15 +4,16 @@
 #include <netinet/in.h>
 #include <unistd.h>
 
+char message[] = "Dakka?\n";
+char buf[sizeof(message)];
+
 int main()
 {
-    int sock, listener;
+    int sock;
     struct sockaddr_in addr;
-    char buf[1024];
-    int bytes_read;
 
-    listener = socket(AF_INET, SOCK_STREAM, 0);
-    if(listener < 0)
+    sock = socket(AF_INET, SOCK_STREAM, 0);
+    if(sock < 0)
     {
         perror("socket");
         exit(1);
@@ -20,33 +21,18 @@ int main()
 
     addr.sin_family = AF_INET;
     addr.sin_port = htons(8000);
-    addr.sin_addr.s_addr = htonl(INADDR_ANY);
-    if(bind(listener, (struct sockaddr *)&addr, sizeof(addr)) < 0)
+    addr.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
+    if(connect(sock, (struct sockaddr *)&addr, sizeof(addr)) < 0)
     {
-        perror("bind");
+        perror("connect");
         exit(2);
     }
 
-    listen(listener, 1);
+    send(sock, message, sizeof(message), 0);
+    recv(sock, buf, sizeof(message), 0);
 
-    while(1)
-    {
-        sock = accept(listener, NULL, NULL);
-        if(sock < 0)
-        {
-            perror("accept");
-            exit(3);
-        }
-
-        while(1)
-        {
-            bytes_read = recv(sock, buf, 1024, 0);
-            if(bytes_read <= 0) break;
-            send(sock, buf, bytes_read, 0);
-        }
-
-        close(sock);
-    }
+    printf(buf);
+    close(sock);
 
     return 0;
 }
