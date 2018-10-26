@@ -5,6 +5,7 @@
 #include <string>
 #include <thread>
 #include <vector>
+#include <math.h>
 
 const int NUM_CPU_STATES = 10;
 
@@ -87,7 +88,7 @@ void ReadStatsCPU(vector<CPUData> & entries)
 			// replace "cpu" with "tot" when it's total values
 			else
 				entry.cpu = STR_TOT;
-
+                //cout<<entry.cpu;
 			// read times
 			for(int i = 0; i < NUM_CPU_STATES; ++i)
 				ss >> entry.times[i];
@@ -115,30 +116,25 @@ size_t GetActiveTime(const CPUData & e)
 
 void PrintStats(const vector<CPUData> & entries1, const vector<CPUData> & entries2)
 {
-	const size_t NUM_ENTRIES = entries1.size();
+	//const size_t NUM_ENTRIES = entries1.size();
 
-	for(size_t i = 0; i < NUM_ENTRIES; ++i)
+	for(size_t i = 0; i < 1; ++i)
 	{
 		const CPUData & e1 = entries1[i];
 		const CPUData & e2 = entries2[i];
-
 		cout.width(3);
-		cout << e1.cpu << "] ";
+		//cout << e1.cpu << "/";
 
 		const float ACTIVE_TIME	= static_cast<float>(GetActiveTime(e2) - GetActiveTime(e1));
 		const float IDLE_TIME	= static_cast<float>(GetIdleTime(e2) - GetIdleTime(e1));
 		const float TOTAL_TIME	= ACTIVE_TIME + IDLE_TIME;
 
-		cout << "active: ";
-		cout.setf(ios::fixed, ios::floatfield);
-		cout.width(6);
-		cout.precision(2);
-		cout << (100.f * ACTIVE_TIME / TOTAL_TIME) << "%";
-
-		cout << " - idle: ";
-		cout.setf(ios::fixed, ios::floatfield);
-		cout.width(6);
-		cout.precision(2);
-		cout << (100.f * IDLE_TIME / TOTAL_TIME) << "%" << endl;
+		cout.setf(ios::dec);
+		//cout.width(6);
+		//cout.precision(2);
+//		cout << ;
+        int a = (int)round(100.f *ACTIVE_TIME / TOTAL_TIME);
+        cout<<a<<"/";
+		//cout << (100.f * ACTIVE_TIME / TOTAL_TIME) << "/";
 	}
 }
