@@ -41,7 +41,7 @@ void ReadStatsCPU(vector<CPUData> & entries);
 size_t GetIdleTime(const CPUData & e);
 size_t GetActiveTime(const CPUData & e);
 
-int PrintStats(const vector<CPUData> & entries1, const vector<CPUData> & entries2);
+double PrintStats(const vector<CPUData> & entries1, const vector<CPUData> & entries2);
 
 void ReadStatsCPU(vector<CPUData> & entries){
     ifstream fileStat("/proc/stat");
@@ -96,7 +96,7 @@ size_t GetActiveTime(const CPUData & e){
               e.times[S_GUEST_NICE];
 }
 
-int PrintStats(const vector<CPUData> & entries1, const vector<CPUData> & entries2) {
+double PrintStats(const vector<CPUData> & entries1, const vector<CPUData> & entries2) {
     //const size_t NUM_ENTRIES = entries1.size();
 
     for (size_t i = 0; i < 1; ++i) {
@@ -105,16 +105,15 @@ int PrintStats(const vector<CPUData> & entries1, const vector<CPUData> & entries
         cout.width(3);
         //cout << e1.cpu << "/";
 
-        const float ACTIVE_TIME = static_cast<float>(GetActiveTime(e2) - GetActiveTime(e1));
-        const float IDLE_TIME = static_cast<float>(GetIdleTime(e2) - GetIdleTime(e1));
-        const float TOTAL_TIME = ACTIVE_TIME + IDLE_TIME;
-
+        const double ACTIVE_TIME = static_cast<double>(GetActiveTime(e2) - GetActiveTime(e1));
+        const double IDLE_TIME = static_cast<double>(GetIdleTime(e2) - GetIdleTime(e1));
+        const double TOTAL_TIME = ACTIVE_TIME + IDLE_TIME;
         cout.setf(ios::dec);
         //cout.width(6);
         //cout.precision(2);
 //		cout << ;
-        int a = (int) round(100.f * ACTIVE_TIME / TOTAL_TIME);
-        return a;
+        double res = round(100.f * ACTIVE_TIME / TOTAL_TIME);
+        return res;
         //cout << (100.f * ACTIVE_TIME / TOTAL_TIME) << "/";
     }
 }
