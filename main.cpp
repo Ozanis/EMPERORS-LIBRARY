@@ -6,6 +6,8 @@
 
 #define PORT 4430
 
+Server server;
+
 int main(){
     vector<CPUData> entries1;
     vector<CPUData> entries2;
@@ -17,9 +19,8 @@ int main(){
     double _r2 = f_ram();
     double _hdd1= hdd_1();
     double _hdd2= hdd_2();
-    Server server;
+    
     server.setup(PORT);
-
     while (1) {
         sleep(5);
         server.Send(cp, _r1, _r2, _hdd1, _hdd2);
