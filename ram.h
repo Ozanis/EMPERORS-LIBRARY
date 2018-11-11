@@ -10,19 +10,17 @@ static const double gigi = 1024 * 1024 *1024;
 
 static struct sysinfo blya;
 
-int t_ram () {
+double t_ram () {
     sysinfo (&blya);
     double _ram=blya.totalram / gigi;
-    int ram = (int)_ram;
-    return ram;
+    return _ram;
 
 }
 
-int f_ram(){
+double f_ram(){
     sysinfo (&blya);
     double _ram=blya.freeram / gigi;
-    int ram = (int)_ram;
-    return ram;
+    return _ram;
 }
 
 #endif //UNTITLED4_RAM_H
