@@ -51,11 +51,11 @@ double Server::Send(double cp, double _r1, double _r2, double hdd_1, double hdd_
     string  message=to_string(cp)+"/"+to_string(_r1)+"/"+to_string(_r2)+"/"+to_string(hdd_1)+"/"+to_string(hdd_2);
     if (message.size()>=MAXPACKETSIZE) return 1;
     int i;
-    char *msg = (char*)malloc(sizeof(char));
-    for(i=1; i<=message.size(); i++){
+    char *msg = (char*)malloc(sizeof(char)*(message.size()+1));
+    for(i=0; i<message.size(); i++){
         msg[i]=message[i];
-        if (i<message.size()) msg=(char*)realloc(msg, (i+1)*sizeof(char));
-        if(i==message.size()) break;
+//        if (i<message.size()) msg=(char*)realloc(msg, (i+1)*sizeof(char));
+//        if(i==message.size()) break;
     }
     send(newsockfd,&msg, sizeof(msg),0);
     return 0;
@@ -64,12 +64,12 @@ double Server::Send(double cp, double _r1, double _r2, double hdd_1, double hdd_
 
 void Server::clean()
 {
-    Message = "";
+//    Message = "";
     memset(msg, 0, MAXPACKETSIZE);
     close(sockfd);
     close(newsockfd);
-    delete(&sockfd);
-    delete(&newsockfd);
+//    delete(&sockfd);
+//    delete(&newsockfd);
 }
 
 #endif //UNTITLED4_SERVER_H
