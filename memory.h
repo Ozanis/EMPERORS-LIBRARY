@@ -14,7 +14,6 @@ using namespace std;
 class memory{
 
 public:
-    static struct sysinfo inf;
     double k_r;
     double k_h;
     double ram_tot;
@@ -31,8 +30,8 @@ public:
 };
 
 memory::memory(){
-   this->k_r =(double)1024*1024*1024*8*1024;
-    this->k_h =(double)1000*1000*1000;
+   this->k_r =(double)1024*1024*1024*8*1000;
+   this->k_h =(double)1024*1024*1024*1024;
 }
 
 memory::~memory(){}
@@ -46,7 +45,7 @@ double memory::allHdd(){
 
 double memory::getHdd(){
     struct statfs dat;
-    hdd=((dat.f_blocks * dat.f_frsize -(dat.f_bavail * dat.f_frsize))/k_h);
+    hdd=((dat.f_blocks * dat.f_frsize -(dat.f_bavail * dat.f_frsize))/k_r);
     hdd=floor(hdd*100)/100;
     return hdd;
 }
