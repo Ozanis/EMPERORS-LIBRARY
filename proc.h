@@ -113,8 +113,7 @@ double PrintStats(const vector<CPUData> & entries1, const vector<CPUData> & entr
         //cout.precision(2);
 //		cout << ;
         double res = 100.f * ACTIVE_TIME / TOTAL_TIME;
-        cout << (100.f * ACTIVE_TIME / TOTAL_TIME) << "/";
-        return res;
+         return res;
 
     }
 }
