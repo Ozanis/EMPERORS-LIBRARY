@@ -3,4 +3,4 @@ project(untitled2)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(untitled4 main.cpp processor.h ram.h hdd.h server.h)
+add_executable(untitled4 main.cpp proc.h memory.h server.h)

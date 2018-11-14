@@ -10,11 +10,11 @@
 #include <thread>
 #include <vector>
 #include <math.h>
+#include <iomanip>
 
 using namespace std;
 
 const int NUM_CPU_STATES = 10;
-
 
 enum CPUStates
 {
@@ -105,16 +105,17 @@ double PrintStats(const vector<CPUData> & entries1, const vector<CPUData> & entr
         cout.width(3);
         //cout << e1.cpu << "/";
 
-        const double ACTIVE_TIME = static_cast<double>(GetActiveTime(e2) - GetActiveTime(e1));
-        const double IDLE_TIME = static_cast<double>(GetIdleTime(e2) - GetIdleTime(e1));
+        const auto ACTIVE_TIME = static_cast<double>(GetActiveTime(e2) - GetActiveTime(e1));
+        const auto IDLE_TIME = static_cast<double>(GetIdleTime(e2) - GetIdleTime(e1));
         const double TOTAL_TIME = ACTIVE_TIME + IDLE_TIME;
-        cout.setf(ios::dec);
+
         //cout.width(6);
         //cout.precision(2);
 //		cout << ;
-        double res = round(100.f * ACTIVE_TIME / TOTAL_TIME);
+        double res = 100.f * ACTIVE_TIME / TOTAL_TIME;
+        cout << (100.f * ACTIVE_TIME / TOTAL_TIME) << "/";
         return res;
-        //cout << (100.f * ACTIVE_TIME / TOTAL_TIME) << "/";
+
     }
 }
 
