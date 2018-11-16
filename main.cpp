@@ -15,9 +15,9 @@ int main(){
     ReadStatsCPU(entries2);
     double cp = PrintStats(entries1, entries2);
     memory meminfo;
-    cout << meminfo.allRam()<<endl;
+    cout << meminfo.getAllRam()<<endl;
     cout<< meminfo.getRam()<<endl;
-    cout << meminfo.allHdd()<<endl;
+    cout << meminfo.getAllHdd()<<endl;
    cout << meminfo.getHdd()<< endl;
 
     server.setup(PORT);

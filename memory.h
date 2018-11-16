@@ -4,18 +4,17 @@
 #include <linux/kernel.h>
 #include <stdio.h>
 #include <sys/sysinfo.h>
-#include <sys/statfs.h>
+#include <sys/statvfs.h>
 #include <unistd.h>
 #include <iostream>
 #include <math.h>
 
 using namespace std;
 
-class memory{
+class memory {
 
 public:
-    double k_r;
-    double k_h;
+    double gigi=1000000000;
     double ram_tot;
     double ram;
     double hdd_tot;
@@ -23,45 +22,43 @@ public:
 
     memory();
     ~memory();
+
     double getRam();
     double getHdd();
-    double allRam();
-    double allHdd();
+    double getAllRam();
+    double getAllHdd();
 };
 
-memory::memory(){
-   this->k_r =(double)1024*1024*1024*8*1000;
-   this->k_h =(double)1024*1024*1024*1024;
-}
+memory::memory(){}
 
 memory::~memory(){}
 
-double memory::allHdd(){
-    struct statfs dat;
-    hdd_tot = (dat.f_bavail * dat.f_frsize)/k_h;
-    hdd_tot=floor(hdd_tot*100)/100;
-    return hdd_tot;
+double memory::getAllHdd(){
+    struct statvfs inf;
+    if (statvfs(".", &inf) == -1)
+        return -1;
+    hdd_tot=(inf.f_blocks * inf.f_frsize)/gigi;
+    return floor(hdd_tot*100)/100;
 }
 
 double memory::getHdd(){
-    struct statfs dat;
-    hdd=((dat.f_blocks * dat.f_frsize -(dat.f_bavail * dat.f_frsize))/k_r);
-    hdd=floor(hdd*100)/100;
-    return hdd;
+    struct statvfs inf;
+    statvfs(".", &inf);
+        //return -1;
+    hdd=(getAllHdd()- inf.f_bavail * inf.f_frsize/gigi);
+    return floor(hdd*100)/100;
 }
 
-double memory::allRam(){
+double memory::getAllRam(){
     struct sysinfo inf;
-    ram_tot=inf.totalram/k_r*1000;
-    ram_tot=floor(ram_tot*100)/100;
-    return ram_tot;
+    ram_tot = inf.totalram/gigi/10000;
+    return floor(ram_tot*100)/100;
 }
 
 double memory::getRam() {
     struct sysinfo inf;
-    ram=(inf.totalram - inf.freeram)/k_r/1000;
-    ram=floor(ram*100)/100;
-    return ram;
+    ram = (inf.totalram-inf.freeram)/gigi/gigi/10;
+    return floor(ram*100)/100;
 }
 
 #endif //UNTITLED4_RAM_H
