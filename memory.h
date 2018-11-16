@@ -35,8 +35,7 @@ memory::~memory(){}
 
 double memory::getAllHdd(){
     struct statvfs inf;
-    if (statvfs(".", &inf) == -1)
-        return -1;
+    statvfs(".", &inf);
     hdd_tot=(inf.f_blocks * inf.f_frsize)/gigi;
     return floor(hdd_tot*100)/100;
 }
@@ -44,7 +43,6 @@ double memory::getAllHdd(){
 double memory::getHdd(){
     struct statvfs inf;
     statvfs(".", &inf);
-        //return -1;
     hdd=(getAllHdd()- inf.f_bavail * inf.f_frsize/gigi);
     return floor(hdd*100)/100;
 }
