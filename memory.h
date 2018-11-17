@@ -12,7 +12,6 @@
 using namespace std;
 
 class memory {
-
 public:
     double gigi=1000000000;
     double ram_tot;
