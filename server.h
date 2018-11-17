@@ -2,6 +2,7 @@
 #define UNTITLED4_SERVER_H
 
 #include <iostream>
+#include <assert.h>
 #include <vector>
 #include <stdio.h>
 #include <stdlib.h>
@@ -16,27 +17,28 @@
 
 using namespace std;
 
-
-#define MAXPACKETSIZE 4096
-
 class Server
 {
 public:
     int sockfd, newsockfd, n, pid;
     struct sockaddr_in serverAddress;
     struct sockaddr_in clientAddress;
-    char msg[ MAXPACKETSIZE ];
-    static string Message;
-    void setup(int port);
+    vector<char> msg;
+    unsigned int PACKET_SIZE;
+    char * message;
+    string data;
+    Server();
+    ~Server();
+    void setup(uint16_t port);
     double Send(double cp, double _r1, double _r2, double hdd_1, double hdd_2);
     void clean();
-
-private:
-
 };
 
-void Server::setup(int port)
-{
+Server::Server(){}
+
+Server::~Server(){}
+
+void Server::setup(uint16_t port) {
     sockfd=socket(AF_INET,SOCK_STREAM,0);
     memset(&serverAddress,0,sizeof(serverAddress));
     serverAddress.sin_family=AF_INET;
@@ -47,30 +49,27 @@ void Server::setup(int port)
 }
 
 
-double Server::Send(double cp, double _r1, double _r2, double hdd_1, double hdd_2)
-{
-    string  message=to_string(cp)+"/"+to_string(_r1)+"/"+to_string(_r2)+"/"+to_string(hdd_1)+"/"+to_string(hdd_2);
-    if (message.size()>=MAXPACKETSIZE) return 1;
-    int i;
-    char *msg = (char*)malloc(sizeof(char)*(message.size()+1));
-    for(i=0; i<message.size(); i++){
-        msg[i]=message[i];
-//        if (i<message.size()) msg=(char*)realloc(msg, (i+1)*sizeof(char));
-//        if(i==message.size()) break;
-    }
-    send(newsockfd,&msg, sizeof(msg),0);
+double Server::Send(double cp, double _r1, double _r2, double hdd_1, double hdd_2){
+    string data=to_string(cp)+"/"+to_string(_r1)+"/"+to_string(_r2)+"/"+to_string(hdd_1)+"/"+to_string(hdd_2);
+    message = new char[data.length()];
+    std::copy(data.begin(), data.end(), std::back_inserter(message));
+    //for (int i = 0; i < msg.size() && i < PACKET_SIZE; i++) {
+      //  message[i] = msg[i];
+    //}
+    /*vector<char> msg;
+    //assert(msg.size() == sizeof(double));
+    memcpy(&cp, &msg[0], std::min(msg.size(), sizeof(double)));*/
+    cout << message;
+    send(newsockfd,&message, sizeof(message),0);
     return 0;
 }
 
 
-void Server::clean()
-{
-//    Message = "";
-    memset(msg, 0, MAXPACKETSIZE);
+
+void Server::clean(){
+  //  memset(msg, 0, PACKET_SIZE);
     close(sockfd);
     close(newsockfd);
-//    delete(&sockfd);
-//    delete(&newsockfd);
 }
 
 #endif //UNTITLED4_SERVER_H

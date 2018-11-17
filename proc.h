@@ -97,23 +97,17 @@ size_t GetActiveTime(const CPUData & e){
 }
 
 double PrintStats(const vector<CPUData> & entries1, const vector<CPUData> & entries2) {
-    //const size_t NUM_ENTRIES = entries1.size();
 
     for (size_t i = 0; i < 1; ++i) {
         const CPUData &e1 = entries1[i];
         const CPUData &e2 = entries2[i];
-        cout.width(3);
-        //cout << e1.cpu << "/";
 
         const auto ACTIVE_TIME = static_cast<double>(GetActiveTime(e2) - GetActiveTime(e1));
         const auto IDLE_TIME = static_cast<double>(GetIdleTime(e2) - GetIdleTime(e1));
         const double TOTAL_TIME = ACTIVE_TIME + IDLE_TIME;
 
-        //cout.width(6);
-        //cout.precision(2);
-//		cout << ;
         double res = 100.f * ACTIVE_TIME / TOTAL_TIME;
-         return res;
+        return floor(res*100)/100;
 
     }
 }

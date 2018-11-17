@@ -5,8 +5,6 @@
 
 #define PORT 4430
 
-Server server;
-
 int main(){
     vector<CPUData> entries1;
     vector<CPUData> entries2;
@@ -15,18 +13,18 @@ int main(){
     ReadStatsCPU(entries2);
     double cp = PrintStats(entries1, entries2);
     memory meminfo;
-    cout << meminfo.getAllRam()<<endl;
-    cout<< meminfo.getRam()<<endl;
-    cout << meminfo.getAllHdd()<<endl;
-   cout << meminfo.getHdd()<< endl;
+    meminfo.getAllRam();
+    meminfo.getRam();
+    meminfo.getAllHdd();
+    meminfo.getHdd();
 
-    server.setup(PORT);
-    /*
+    Server cnct;
+    cnct.setup(PORT);
+/*
     while (1) {
         sleep(5);
-        server.Send(cp, _r1, _r2, _hdd1, _hdd2);
-        server.clean();
-    }
-     */
+        cnct.Send(cp, _r1, _r2, _hdd1, _hdd2);
+        cnct.clean();
+    } */
     return 0;
 }
