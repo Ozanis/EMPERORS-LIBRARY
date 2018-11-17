@@ -1,7 +1,6 @@
 #ifndef UNTITLED4_PROC_H
 #define UNTITLED4_PROC_H
 
-
 #include <chrono>
 #include <fstream>
 #include <iostream>

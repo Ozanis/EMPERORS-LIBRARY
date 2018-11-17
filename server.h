@@ -32,7 +32,7 @@ public:
     Server();
     ~Server();
     void setup();
-    double Send(double cp, double _r1, double _r2, double hdd_1, double hdd_2);
+    bool Send(double _cp, double _r1, double _r2, double hdd_1, double hdd_2);
     void clean();
 };
 
@@ -51,14 +51,13 @@ void Server::setup() {
     listen(sockfd, 1);
 }
 
-double Server::Send(double cp, double _r1, double _r2, double hdd_1, double hdd_2){
-    string data=to_string(cp)+"/"+to_string(_r1)+"/"+to_string(_r2)+"/"+to_string(hdd_1)+"/"+to_string(hdd_2);
+bool Server::Send(double _cp, double _r1, double _r2, double hdd_1, double hdd_2){
+    string data=to_string(_cp)+"/"+to_string(_r1)+"/"+to_string(_r2)+"/"+to_string(hdd_1)+"/"+to_string(hdd_2);
     message = new char[data.length()];
     for (int i = 0; i <= data.length(); i++) {
       message[i] = data[i];
     }
-    send(newsockfd, message, sizeof(message),0);
-    return 0;
+    return send(newsockfd, message, sizeof(message), 0) < 0;
 }
 
 void Server::clean(){
