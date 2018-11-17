@@ -23,10 +23,7 @@ public:
     int sockfd, newsockfd, n, pid;
     struct sockaddr_in serverAddress;
     struct sockaddr_in clientAddress;
-    vector<char> msg;
-    unsigned int PACKET_SIZE;
     char * message;
-    string data;
     Server();
     ~Server();
     void setup(uint16_t port);
@@ -52,14 +49,14 @@ void Server::setup(uint16_t port) {
 double Server::Send(double cp, double _r1, double _r2, double hdd_1, double hdd_2){
     string data=to_string(cp)+"/"+to_string(_r1)+"/"+to_string(_r2)+"/"+to_string(hdd_1)+"/"+to_string(hdd_2);
     message = new char[data.length()];
-    std::copy(data.begin(), data.end(), std::back_inserter(message));
-    //for (int i = 0; i < msg.size() && i < PACKET_SIZE; i++) {
-      //  message[i] = msg[i];
-    //}
+    vector<char> msg;
+    std::copy(data.begin(), data.end(), std::back_inserter(msg));
+    for (int i = 0; i < msg.size() && i < data.length(); i++) {
+      message[i] = msg[i];
+    }
     /*vector<char> msg;
     //assert(msg.size() == sizeof(double));
     memcpy(&cp, &msg[0], std::min(msg.size(), sizeof(double)));*/
-    cout << message;
     send(newsockfd,&message, sizeof(message),0);
     return 0;
 }
