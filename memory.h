@@ -15,8 +15,11 @@ struct statvfs inf;
 void physical_mem_usage(double &_hdd1, double &_hdd2){
     statvfs(".", &inf);
 
-    _hdd1=(inf.f_blocks * inf.f_frsize)/1000000000.0;
+    _hdd1=(inf.f_blocks * inf.f_frsize);
     _hdd2=(_hdd1 - inf.f_bavail * inf.f_frsize);
+
+    _hdd1/=1000000000.0;
+    _hdd2/=1000000000.0;
 
     _hdd1 =floor(_hdd1*100)/100;
     _hdd2 = floor(_hdd2*100)/100;

@@ -26,13 +26,10 @@ int main() {
 
         process_mem_usage(_r1, _r2);
         physical_mem_usage(_hdd1, _hdd2);
-        cout<< _cp << endl << _r1 << endl << _r2 << endl << _hdd1 << endl << _hdd2;
+        cout<< _cp << endl << _r1 << endl << _r2 << endl << _hdd1 << endl << _hdd2 << endl;
 
         cnct.Send(_cp, _r1, _r2, _hdd1, _hdd2);
         cnct.clean();
-
-        entries1.clear();
-        entries1.clear();
 
         sleep(4);
     } while (cnct.Send(_cp, _r1, _r2, _hdd1, _hdd2));
