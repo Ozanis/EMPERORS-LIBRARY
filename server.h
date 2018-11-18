@@ -17,7 +17,8 @@
 #include "proc.h"
 #include <memory.h>
 
-using namespace std;
+using std::string;
+using std::to_string;
 
 class Server
 {

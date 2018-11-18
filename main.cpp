@@ -6,10 +6,9 @@
 #include "server.h"
 #include "math.h"
 
-int main() {
-    using std::cout;
-    using std::endl;
+using namespace std;
 
+int main() {
     double _cp, _hdd1, _hdd2, _r1, _r2;
 
     Server cnct;

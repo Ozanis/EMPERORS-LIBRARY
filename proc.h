@@ -11,7 +11,11 @@
 #include <math.h>
 #include <iomanip>
 
-using namespace std;
+using std::string;
+using std::vector;
+using std::stringstream;
+using std::ifstream;
+using std::istringstream;
 
 const int NUM_CPU_STATES = 10;
 
@@ -35,15 +39,6 @@ typedef struct CPUData
     size_t times[NUM_CPU_STATES];
 } CPUData;
 
-
-/*
-void ReadStatsCPU(vector<CPUData> & entries);
-
-size_t GetIdleTime(const CPUData & e);
-size_t GetActiveTime(const CPUData & e);
-
-void PrintStats(const vector<CPUData> & entries1, const vector<CPUData> & entries2, double &_cp);
-*/
 void ReadStatsCPU(vector<CPUData> & entries){
     ifstream fileStat("/proc/stat");
 
@@ -101,13 +96,11 @@ void PrintStats(vector<CPUData> & entries1, vector<CPUData> & entries2, double &
     for (size_t i = 0; i < 1; ++i) {
         CPUData &e1 = entries1[i];
         CPUData &e2 = entries2[i];
-
         auto ACTIVE_TIME = static_cast<double>(GetActiveTime(e2) - GetActiveTime(e1));
         auto IDLE_TIME = static_cast<double>(GetIdleTime(e2) - GetIdleTime(e1));
         double TOTAL_TIME = ACTIVE_TIME + IDLE_TIME;
-//cout << ACTIVE_TIME << endl << TOTAL_TIME;
         _cp = 100.f * ACTIVE_TIME / TOTAL_TIME;
-       // _cp = floor(_cp*100)/100;
+        _cp = floor(_cp*100)/100;
     }
 }
 
