@@ -19,7 +19,7 @@ int main() {
         vector<CPUData> entries2;
 
         ReadStatsCPU(entries1);
-        this_thread::sleep_for(chrono::milliseconds(150));
+        this_thread::sleep_for(chrono::milliseconds(200));
         ReadStatsCPU(entries2);
         PrintStats(entries1, entries2, _cp);
 
