@@ -14,7 +14,6 @@ int main() {
     Server cnct;
     cnct.setup();
     do {
-
         vector<CPUData> entries1;
         vector<CPUData> entries2;
 
