@@ -1,5 +1,5 @@
-#ifndef UNTITLED4_RAM_H
-#define UNTITLED4_RAM_H
+#ifndef UNTITLED2_HDD_H
+#define UNTITLED2_HDD_H
 
 #include <linux/kernel.h>
 #include <stdio.h>
@@ -8,54 +8,40 @@
 #include <unistd.h>
 #include <iostream>
 #include <math.h>
+#include <fstream>
 
-using namespace std;
+struct statvfs inf;
 
-class memory {
-public:
-    double gigi=1000000000;
-    double ram_tot;
-    double ram;
-    double hdd_tot;
-    double hdd;
-
-    memory();
-    ~memory();
-
-    double getRam();
-    double getHdd();
-    double getAllRam();
-    double getAllHdd();
-};
-
-memory::memory(){}
-
-memory::~memory(){}
-
-double memory::getAllHdd(){
-    struct statvfs inf;
+void physical_mem_usage(double &_hdd1, double &_hdd2){
     statvfs(".", &inf);
-    hdd_tot=(inf.f_blocks * inf.f_frsize)/gigi;
-    return floor(hdd_tot*100)/100;
+
+    _hdd1=(inf.f_blocks * inf.f_frsize)/1000000000.0;
+    _hdd2=(_hdd1 - inf.f_bavail * inf.f_frsize);
+
+    _hdd1 =floor(_hdd1*100)/100;
+    _hdd2 = floor(_hdd2*100)/100;
 }
 
-double memory::getHdd(){
-    struct statvfs inf;
-    statvfs(".", &inf);
-    hdd=(getAllHdd()- inf.f_bavail * inf.f_frsize/gigi);
-    return floor(hdd*100)/100;
+void process_mem_usage(double& vm_usage, double& resident_set){
+    vm_usage     = 0.0;
+    resident_set = 0.0;
+
+    // the two fields we want
+    unsigned long vsize;
+    long rss;
+    {
+        std::string ignore;
+        std::ifstream ifs("/proc/self/stat", std::ios_base::in);
+        ifs >> ignore >> ignore >> ignore >> ignore >> ignore >> ignore >> ignore >> ignore >> ignore >> ignore
+            >> ignore >> ignore >> ignore >> ignore >> ignore >> ignore >> ignore >> ignore >> ignore >> ignore
+            >> ignore >> ignore >> vsize >> rss;
+    }
+
+    long page_size_kb = sysconf(_SC_PAGE_SIZE) / 1024; // in case x86-64 is configured to use 2MB pages
+    vm_usage = vsize / 1024.0 / 1024.0;
+    vm_usage = floor(vm_usage*100)/100;
+    resident_set = (rss * page_size_kb)/1024.0;
+    resident_set=floor(resident_set*100)/100;
 }
 
-double memory::getAllRam(){
-    struct sysinfo inf;
-    ram_tot = inf.totalram/gigi/10000;
-    return floor(ram_tot*100)/100;
-}
-
-double memory::getRam() {
-    struct sysinfo inf;
-    ram = (inf.totalram-inf.freeram)/gigi/gigi/10;
-    return floor(ram*100)/100;
-}
-
-#endif //UNTITLED4_RAM_H
+#endif //UNTITLED2_HDD_H

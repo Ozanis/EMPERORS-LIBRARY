@@ -35,21 +35,23 @@ typedef struct CPUData
     size_t times[NUM_CPU_STATES];
 } CPUData;
 
+
+/*
 void ReadStatsCPU(vector<CPUData> & entries);
 
 size_t GetIdleTime(const CPUData & e);
 size_t GetActiveTime(const CPUData & e);
 
-double PrintStats(const vector<CPUData> & entries1, const vector<CPUData> & entries2);
-
+void PrintStats(const vector<CPUData> & entries1, const vector<CPUData> & entries2, double &_cp);
+*/
 void ReadStatsCPU(vector<CPUData> & entries){
     ifstream fileStat("/proc/stat");
 
     string line;
 
-    const string STR_CPU("cpu");
-    const size_t LEN_STR_CPU = STR_CPU.size();
-    const string STR_TOT("tot");
+    string STR_CPU("cpu");
+    size_t LEN_STR_CPU = STR_CPU.size();
+    string STR_TOT("tot");
 
     while(getline(fileStat, line))
     {
@@ -73,18 +75,18 @@ void ReadStatsCPU(vector<CPUData> & entries){
                 entry.cpu = STR_TOT;
             //cout<<entry.cpu;
             // read times
-            for(int i = 0; i < NUM_CPU_STATES; ++i)
-                ss >> entry.times[i];
+            for (unsigned long &time : entry.times)
+                ss >> time;
         }
     }
 }
 
-size_t GetIdleTime(const CPUData & e){
+size_t GetIdleTime(CPUData & e){
     return	e.times[S_IDLE] +
               e.times[S_IOWAIT];
 }
 
-size_t GetActiveTime(const CPUData & e){
+size_t GetActiveTime(CPUData & e){
     return	e.times[S_USER] +
               e.times[S_NICE] +
               e.times[S_SYSTEM] +
@@ -95,19 +97,17 @@ size_t GetActiveTime(const CPUData & e){
               e.times[S_GUEST_NICE];
 }
 
-double PrintStats(const vector<CPUData> & entries1, const vector<CPUData> & entries2) {
-
+void PrintStats(vector<CPUData> & entries1, vector<CPUData> & entries2, double & _cp ) {
     for (size_t i = 0; i < 1; ++i) {
-        const CPUData &e1 = entries1[i];
-        const CPUData &e2 = entries2[i];
+        CPUData &e1 = entries1[i];
+        CPUData &e2 = entries2[i];
 
-        const auto ACTIVE_TIME = static_cast<double>(GetActiveTime(e2) - GetActiveTime(e1));
-        const auto IDLE_TIME = static_cast<double>(GetIdleTime(e2) - GetIdleTime(e1));
-        const double TOTAL_TIME = ACTIVE_TIME + IDLE_TIME;
+        auto ACTIVE_TIME = static_cast<double>(GetActiveTime(e2) - GetActiveTime(e1));
+        auto IDLE_TIME = static_cast<double>(GetIdleTime(e2) - GetIdleTime(e1));
+        double TOTAL_TIME = ACTIVE_TIME + IDLE_TIME;
 
-        double res = 100.f * ACTIVE_TIME / TOTAL_TIME;
-        return floor(res*100)/100;
-
+        _cp = 100.f * ACTIVE_TIME / TOTAL_TIME;
+        _cp = floor(_cp*100)/100;
     }
 }
 
