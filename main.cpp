@@ -10,7 +10,8 @@ using namespace std;
 
 int main() {
     double _cp, _hdd1, _hdd2, _r1, _r2;
-
+    long _ncp = sysconf(_SC_NPROCESSORS_ONLN);
+    string data;
     Server cnct;
     cnct.setup();
     do {
@@ -24,13 +25,12 @@ int main() {
 
         process_mem_usage(_r1, _r2);
         physical_mem_usage(_hdd1, _hdd2);
-        cout<< _cp << endl << _r1 << endl << _r2 << endl << _hdd1 << endl << _hdd2 << endl;
-
-        cnct.Send(_cp, _r1, _r2, _hdd1, _hdd2);
+        data=to_string(_cp)+"/"+to_string(_ncp)+"/"+to_string(_r1)+"/"+to_string(_r2)+"/"+to_string(_hdd1)+"/"+to_string(_hdd2);
+        cnct.Send(data);
         cnct.clean();
 
         sleep(4);
-    } while (cnct.Send(_cp, _r1, _r2, _hdd1, _hdd2));
+    } while (cnct.Send(data));
 
     return 0;
 }

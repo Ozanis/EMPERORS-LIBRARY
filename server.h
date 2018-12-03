@@ -1,6 +1,3 @@
-#ifndef UNTITLED4_SERVER_H
-#define UNTITLED4_SERVER_H
-
 #include <iostream>
 #include <assert.h>
 #include <vector>
@@ -14,8 +11,7 @@
 #include <string.h>
 #include <arpa/inet.h>
 #include <pthread.h>
-#include "proc.h"
-#include <memory.h>
+
 
 using std::string;
 using std::to_string;
@@ -28,19 +24,18 @@ private:
     struct sockaddr_in clientAddress;
 
 public:
-    int sockfd, newsockfd, n, pid;
+    int sockfd, newsockfd;
     char * message;
     Server();
     ~Server();
     void setup();
-    bool Send(double _cp, double _r1, double _r2, double hdd_1, double hdd_2);
+    bool Send(string data);
     void clean();
 };
 
 Server::Server(){}
 
 Server::~Server(){}
-
 
 void Server::setup() {
     sockfd=socket(AF_INET,SOCK_STREAM,0);
@@ -52,8 +47,7 @@ void Server::setup() {
     listen(sockfd, 1);
 }
 
-bool Server::Send(double _cp, double _r1, double _r2, double hdd_1, double hdd_2){
-    string data=to_string(_cp)+"/"+to_string(_r1)+"/"+to_string(_r2)+"/"+to_string(hdd_1)+"/"+to_string(hdd_2);
+bool Server::Send(string data){
     message = new char[data.length()];
     for (int i = 0; i <= data.length(); i++) {
       message[i] = data[i];
@@ -66,5 +60,3 @@ void Server::clean(){
     close(sockfd);
     close(newsockfd);
 }
-
-#endif //UNTITLED4_SERVER_H

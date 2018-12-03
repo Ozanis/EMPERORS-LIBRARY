@@ -1,9 +1,3 @@
-#ifndef UNTITLED2_HDD_H
-#define UNTITLED2_HDD_H
-
-#include <linux/kernel.h>
-#include <stdio.h>
-#include <sys/sysinfo.h>
 #include <sys/statvfs.h>
 #include <unistd.h>
 #include <iostream>
@@ -46,5 +40,3 @@ void process_mem_usage(double& vm_usage, double& resident_set){
     resident_set = (rss * page_size_kb)/1024.0;
     resident_set=floor(resident_set*100)/100;
 }
-
-#endif //UNTITLED2_HDD_H
