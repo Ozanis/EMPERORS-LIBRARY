@@ -1,6 +1,3 @@
-#ifndef UNTITLED4_PROC_H
-#define UNTITLED4_PROC_H
-
 #include <chrono>
 #include <fstream>
 #include <iostream>
@@ -103,5 +100,3 @@ void PrintStats(vector<CPUData> & entries1, vector<CPUData> & entries2, double &
         _cp = floor(_cp*100)/100;
     }
 }
-
-#endif //UNTITLED4_PROC_H

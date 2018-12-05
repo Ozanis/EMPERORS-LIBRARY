@@ -40,3 +40,4 @@ void process_mem_usage(double& vm_usage, double& resident_set){
     resident_set = (rss * page_size_kb)/1024.0;
     resident_set=floor(resident_set*100)/100;
 }
+
