@@ -27,8 +27,6 @@ int main() {
             process_mem_usage(_r1, _r2);
             physical_mem_usage(_hdd1, _hdd2);
             data=to_string(_cp)+"/"+to_string(_ncp)+"/"+to_string(_r1)+"/"+to_string(_r2)+"/"+to_string(_hdd1)+"/"+to_string(_hdd2);
-            //cnct.Send(data);
-            //cout << data << endl;
             sleep(4);
         } while (!cnct.Send(data));
     } return 0;

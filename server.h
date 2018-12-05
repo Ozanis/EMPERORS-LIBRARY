@@ -11,7 +11,7 @@
 #include <arpa/inet.h>
 #include <pthread.h>
 
-using std::cerr, std::cout, std::endl;
+using std::cerr;
 using std::string;
 using std::to_string;
 
@@ -72,6 +72,5 @@ bool Server::Send(string data){
         return false;
     } message = new char[data.length()];
     strcpy(message, data.c_str());
-    //message[data.length()+1]='\0';
     return send(newsockfd, message, sizeof(message), 0)<0;
 }
