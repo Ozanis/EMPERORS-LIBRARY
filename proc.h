@@ -98,5 +98,6 @@ void PrintStats(vector<CPUData> & entries1, vector<CPUData> & entries2, double &
         double TOTAL_TIME = ACTIVE_TIME + IDLE_TIME;
         _cp = 100.f * ACTIVE_TIME / TOTAL_TIME;
         _cp = floor(_cp*100)/100;
+
     }
 }
