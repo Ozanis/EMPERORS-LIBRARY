@@ -89,7 +89,7 @@ size_t GetActiveTime(CPUData & e){
               e.times[S_GUEST_NICE];
 }
 
-double PrintStats(vector<CPUData> & entries1, vector<CPUData> & entries2, double & _cp ) {
+void PrintStats(vector<CPUData> & entries1, vector<CPUData> & entries2, double & _cp ) {
     for (size_t i = 0; i < 1; ++i) {
         CPUData &e1 = entries1[i];
         CPUData &e2 = entries2[i];
@@ -98,5 +98,5 @@ double PrintStats(vector<CPUData> & entries1, vector<CPUData> & entries2, double
         double TOTAL_TIME = ACTIVE_TIME + IDLE_TIME;
         _cp = 100.f * ACTIVE_TIME / TOTAL_TIME;
     }
-        return floor(_cp*100)/100;
+        _cp=floor(_cp*100)/100;
     }
