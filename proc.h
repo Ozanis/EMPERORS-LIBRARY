@@ -8,11 +8,7 @@
 #include <math.h>
 #include <iomanip>
 
-using std::string;
-using std::vector;
-using std::stringstream;
-using std::ifstream;
-using std::istringstream;
+using namespace std;
 
 const int NUM_CPU_STATES = 10;
 
@@ -89,7 +85,7 @@ size_t GetActiveTime(CPUData & e){
               e.times[S_GUEST_NICE];
 }
 
-void PrintStats(vector<CPUData> & entries1, vector<CPUData> & entries2, double & _cp ) {
+string PrintStats(vector<CPUData> & entries1, vector<CPUData> & entries2, double & _cp ) {
     for (size_t i = 0; i < 1; ++i) {
         CPUData &e1 = entries1[i];
         CPUData &e2 = entries2[i];
@@ -98,5 +94,21 @@ void PrintStats(vector<CPUData> & entries1, vector<CPUData> & entries2, double &
         double TOTAL_TIME = ACTIVE_TIME + IDLE_TIME;
         _cp = 100.f * ACTIVE_TIME / TOTAL_TIME;
     }
-        _cp=floor(_cp*100)/100;
+        return to_string(floor(_cp*100)/100)+"/";
     }
+
+string get_cpu(){
+    double _cp;
+    vector<CPUData> entries1;
+    vector<CPUData> entries2;
+
+    ReadStatsCPU(entries1);
+    this_thread::sleep_for(chrono::milliseconds(200));
+    ReadStatsCPU(entries2);
+    PrintStats(entries1, entries2, _cp);
+    return to_string(_cp)+"/";
+}
+
+string cpu_num(){
+    return to_string(sysconf(_SC_NPROCESSORS_ONLN))+"/";
+}
