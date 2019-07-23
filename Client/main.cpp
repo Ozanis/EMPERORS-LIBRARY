@@ -1,25 +1,18 @@
-#ifdef __linux__
-#include "server.h"
+#include "Client.h"
 #include "proc.h"
 #include "memory.h"
 
 int main() {
     string data;
-    Server cnct;
-    cnct.set_up();
+    Client clnt;
+    clnt.set_up();
 
-    cnct.conn();
+    clnt.conn();
     data = cpu_num()+get_cpu()+process_mem_usage()+physical_mem_usage();
-    cnct.Send(data);
+    clnt.Send(data);
     sleep(5);
 
-    cnct.off();
     return 0;
 }
-
-#elif _WIN32
-
-
-#else
 
 #endif
