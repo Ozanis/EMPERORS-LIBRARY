@@ -13,6 +13,8 @@
 #include <pthread.h>
 
 
+#define BUFSIZE 1024
+
 using std :: cerr;
 using std :: cout;
 using std :: endl;
@@ -31,6 +33,7 @@ private:
     socklen_t len = 0;
     struct sockaddr_in serverAddress;
     struct sockaddr_in clientAddress;
+    char buffer[BUFSIZE];
 };
 
 
@@ -49,12 +52,12 @@ Server :: Server(const char * my_addr, uint16_t my_port, const char * guest_addr
 
 
 Server :: ~Server(){
-    memset(&this->serverAddress, 0, sizeof(this->serverAddress));
-    memset(&this->clientAddress, 0, sizeof(this->serverAddress));
     shutdown(this->sockfd, 2);
     shutdown(this->newsockfd, 2);
     close(this->sockfd);
     close(this->newsockfd);
+    memset(&this->serverAddress, 0, sizeof(this->serverAddress));
+    memset(&this->clientAddress, 0, sizeof(this->serverAddress));
     delete(&serverAddress);
     delete(&clientAddress);
 }
@@ -79,9 +82,8 @@ void Server :: Recv(){
         cerr << "Acception error";
         return;
     }
-    char message[512]{0};
-    recv(this->newsockfd, &message, sizeof(message), 0);
-    string telemetry(message);
+    recv(this->newsockfd, &this->buffer, sizeof(this->buffer), 0);
+    string telemetry(this->buffer);
     cout << telemetry << endl;
-    memset(message, 0, sizeof(message));
+    memset(this->buffer, 0, BUFSIZE);
 }
