@@ -11,61 +11,77 @@
 #include <netdb.h>
 #include <arpa/inet.h>
 #include <pthread.h>
-#include "dcmprs.h"
+
 
 using std :: cerr;
 using std :: cout;
 using std :: endl;
+using std :: string;
 
 
 class Server{
-private:
-    uint16_t port = 44301;
-    struct sockaddr_in serverAddress;
-
 public:
-    int sockfd;
-    Server();
+    Server(const char * my_addr, uint16_t my_port, const char * guest_addr, uint16_t guest_port);
     ~Server();
-    void set_up();
-    bool access();
-    int off();
+    int Up();
+    void cast();
     void Recv();
+private:
+    int sockfd = 0, newsockfd = 0;
+    socklen_t len = 0;
+    struct sockaddr_in serverAddress;
+    struct sockaddr_in clientAddress;
 };
 
-Server::Server(){
-    this->sockfd=socket(AF_INET,SOCK_STREAM,0);
-    if(!this->sockfd) cerr << "Error of socket opening-1";
-    this->serverAddress.sin_family=AF_INET;
-    this->serverAddress.sin_addr.s_addr=htonl(INADDR_LOOPBACK);
-    this->serverAddress.sin_port=htons(this->port);
-    }
 
-Server::~Server(){
-    memset(&this->serverAddress,0,sizeof(this->serverAddress));
+Server :: Server(const char * my_addr, uint16_t my_port, const char * guest_addr, uint16_t guest_port) {
+    this->sockfd = socket(AF_INET, SOCK_STREAM, 0);
+    if(this->sockfd < 0) cerr << "Error of socket opening-1";
+    this->serverAddress.sin_family = AF_INET;
+    this->serverAddress.sin_addr.s_addr = inet_addr(my_addr);
+    this->serverAddress.sin_port = htons(my_port);
+
+    this->clientAddress.sin_family = AF_INET;
+    this->clientAddress.sin_addr.s_addr = inet_addr(guest_addr);
+    this->clientAddress.sin_port = htons(guest_port);
+    this->len = sizeof((struct sockaddr*)&this->clientAddress);
+}
+
+
+Server :: ~Server(){
+    memset(&this->serverAddress, 0, sizeof(this->serverAddress));
+    memset(&this->clientAddress, 0, sizeof(this->serverAddress));
+    shutdown(this->sockfd, 2);
+    shutdown(this->newsockfd, 2);
     close(this->sockfd);
+    close(this->newsockfd);
+    delete(&serverAddress);
+    delete(&clientAddress);
 }
 
-void Server::set_up(){
-    socklen_t enable = 1;
-    setsockopt(this->sockfd, IPPROTO_TCP, SO_REUSEADDR, &enable, sizeof(enable));
-    connect(this->sockfd, (struct sockaddr *)&this->serverAddress, sizeof(this->serverAddress));
+
+int Server :: Up(){
+   socklen_t enable = 1;
+   if(setsockopt(this->sockfd, IPPROTO_TCP, SO_REUSEADDR, &enable, sizeof(enable)) < 0)
+       return bind(this->sockfd,(struct sockaddr *)&this->serverAddress, sizeof(this->serverAddress));
+   else return -1;
 }
 
-bool Server::access(){
-    return gethostbyname("127.0.0.1");
+
+void Server :: cast(){
+    listen(this->sockfd, 5);
 }
 
-void Server::Recv(){
-    char message[1024];
-    recv(this->sockfd, &message, sizeof(message), 0);
+
+void Server :: Recv(){
+    this->newsockfd = accept(this->sockfd, (sockaddr*)&this->clientAddress, (socklen_t*)&this->len);
+    if(this->newsockfd < 0){
+        cerr << "Acception error";
+        return;
+    }
+    char message[512]{0};
+    recv(this->newsockfd, &message, sizeof(message), 0);
     string telemetry(message);
     cout << telemetry << endl;
-    cout << message << endl;
-    Gzip msg;
-    string val = msg.decompress(telemetry);
-    cout << val << endl;
-    bzero(message, sizeof(*message));
+    memset(message, 0, sizeof(message));
 }
-
-

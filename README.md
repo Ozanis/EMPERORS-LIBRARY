@@ -2,13 +2,14 @@
 
 <h2>Description</h2>
 
+Client-server service for collecting telemetry over TLS. Meaning CPU load, num of cores, RAM, HDD.
+
 <h2>Related works</h2>
 
 * [Python version](https://github.com/Ozanis/sslsock_client_server)
 
 <h2>Requirements</h2>
 
-* Boost for zip compressing
 * OpenSSL
 
 <h2>Content</h2>
@@ -20,6 +21,6 @@
 
 <h2>Comments</h2>
 
-You can run both applications as serviced daemon using provided bash script 
+You can run both applications as systemd services using provided bash script 
 
 _runs only for linux_
