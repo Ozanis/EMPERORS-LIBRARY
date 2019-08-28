@@ -2,14 +2,6 @@
 #include <thread>
 #include <string.h>
 #include <unistd.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <netinet/tcp.h>
-#include <string.h>
-#include <netdb.h>
-#include <arpa/inet.h>
-
 
 #define BUFSIZE 1024
 
@@ -20,16 +12,8 @@ using std :: endl;
 using std :: string;
 using std :: exception;
 
-typedef struct {
-    int port;
-    int sock;
-    socklen_t len;
-    struct sockaddr_in clientAddress;
-    bool alive;
-}Clients;
 
-
-class Server{
+class Server : public Handler{
 public:
     Server(const char * my_addr, uint16_t my_port, size_t connectors);
     ~Server();
@@ -39,13 +23,11 @@ public:
    
 private:
     int sockfd = 0;
-    size_t num_of_clients = 0; 
-    Clients * clients = nullptr;
+    size_t num_of_clients = 0, cur_num = 0;;
     struct sockaddr_in serverAddress;
     char buffer[BUFSIZE];
     void recv();
     void add_connect();
-    size_t is_alive();
 };
 
 
@@ -56,15 +38,6 @@ Server :: Server(const char * my_addr, uint16_t my_port, size_t connectors) {
     this->serverAddress.sin_addr.s_addr = inet_addr(my_addr);
     this->serverAddress.sin_port = htons(my_port);
     this->num_of_clients = connectors;
-    this->clients = new clients[sizeof(clients)];
-    for(size_t i = 0, uint16_t prt = ++my_port; i < connectors; i++, prt++){
-         this->clients[i]->clientAddress.sin_family = AF_INET;
-         this->clients[i]->clientAddress.sin_addr.s_addr = AF_ADDR_ANY;
-         this->clients[i]->clientAddress.sin_port = htons(this->guest_port);
-         this->clietns[i]->len = sizeof((struct sockaddr*)&this->clients->clientAddress);
-         this->clients[i]->port = prt;
-         this->clients[i]->alive = false;
-    }
 }
 
 
@@ -94,36 +67,6 @@ void Server :: cast(){
 
 
 void Server add_connection(){
-    if(this->cur_num >= this->num_of_clients)
-       Cerr << "Connectors num overflow";
-       return;
-    int newsockfd = accept(this->sockfd, (sockaddr*)&this->clients->clientAddress, (socklen_t*)&clients->this->len);
-    if(this->newsockfd < 0){
-        cerr << "Acception error";
-        return;
-    }
-    for(size_t i = 0; i < this->num_of_client; i++){
-        if(!this->clients[i]->alive){
-            this->clients[i]->alive = true;
-            this->clients[i]->sock = newsockfd;
-        }
-    }
-}
-
-
-void Server :: is_alive(){
-   for(size_t i = 0; i < this->num_of_clients; i++){
-       if(FD_ISSET(this->guest_port[i], handle_read)) ++set;
-       else{
-           ++not_set;
-           this->clients[i]->alive = false;
-           try{
-                shutdown(this->clients[i]->sock, 2);
-                close(this->clients[i]->sock);
-                }
-            throw exception("Socket have closed already");
-        }
-    }
 }
 
 
