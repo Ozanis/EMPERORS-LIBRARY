@@ -6,7 +6,7 @@
 
 using std::string, std::to_string;
 
-struct statvfs inf;
+static struct statvfs inf;
 
 string physical_mem_usage(){
     statvfs(".", &inf);
@@ -17,7 +17,7 @@ string physical_mem_usage(){
     _hdd1/=1000000000.0;
     _hdd2/=1000000000.0;
 
-    _hdd1 =floor(_hdd1*100)/100;
+    _hdd1 = floor(_hdd1*100)/100;
     _hdd2 = floor(_hdd2*100)/100;
 
     return to_string(_hdd1)+"/"+to_string(_hdd2)+"/";
