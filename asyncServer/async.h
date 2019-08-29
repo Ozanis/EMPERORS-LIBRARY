@@ -1,87 +1,76 @@
+#ifndef ASYNC_H
+#define ASYNC_H
+
 #include <iostream>
 #include <thread>
-#include <string.h>
 #include <unistd.h>
+#include "string.h"
+#include "handler.h"
+
 
 #define BUFSIZE 1024
 
 
-using std :: cerr;
-using std :: cout;
-using std :: endl;
 using std :: string;
-using std :: exception;
 
 
-class Server : public Handler{
+class Server : public Handler {
 public:
-    Server(const char * my_addr, uint16_t my_port, size_t connectors);
+    using Handler :: Handler;
+    Server(const char * my_addr, uint16_t my_port, size_t max_connectors);
     ~Server();
-    bool Up();
-    void cast();
-    void ether();
-   
+    void cast()
+
 private:
-    int sockfd = 0;
-    size_t num_of_clients = 0, cur_num = 0;;
-    struct sockaddr_in serverAddress;
+    int server_socket = 0;
     char buffer[BUFSIZE];
-    void recv();
-    void add_connect();
+    uint16_t server_port = 0;
+    socklen_t sock_opt = 1;
+    struct sockaddr_in serverAddress;
+    void recive(Node * connection);
 };
 
 
-Server :: Server(const char * my_addr, uint16_t my_port, size_t connectors) {
-    this->sockfd = socket(AF_INET, SOCK_STREAM, 0);
-    if(this->sockfd < 0) cerr << "Error of socket opening-1";
+Server :: Server(const char * my_addr, uint16_t my_port, size_t max_connectors) {
+    this->server_socket = socket(AF_INET, SOCK_STREAM, 0);
+    if(this->server_socket < 0) cerr << "Error of socket opening-1";
+    if(setsockopt(this->server_socket, IPPROTO_TCP, SO_REUSEADDR, (void*)sock_opt, sizeof(socklen_t)) < 0 ) cerr <<  "Error of setting option";
+    this->server_port = my_port;
     this->serverAddress.sin_family = AF_INET;
-    this->serverAddress.sin_addr.s_addr = inet_addr(my_addr);
+    this->serverAddress.sin_addr.s_addr = INADDR_ANY;
     this->serverAddress.sin_port = htons(my_port);
-    this->num_of_clients = connectors;
+    if(bind(this->server_socket, (struct sockaddr *)&this->serverAddress, sizeof(this->serverAddress)) < 0) cerr << "Binding error";
 }
 
 
 Server :: ~Server(){
-    shutdown(this->sockfd, 2);
-    close(this->sockfd);
-    for(size_t i = 0; i < this->num_of_clients; i++){
-        shutdown(this->clients[i]->sock, 2);
-        close(this->clients[i]->sock);
-        memset(&this->clients->clientAddress[i], 0, sizeof(this->clients->clientAddress[i]));
-        delete(&clientAddress[i]);
-       }
+    shutdown(this->server_socket, 2);
+    close(this->server_socket);
     memset(&this->serverAddress, 0, sizeof(this->serverAddress));
     delete(&serverAddress);
 }
 
 
-bool Server :: Up(){
-   if(setsockopt(this->sockfd, IPPROTO_TCP, SO_REUSEADDR, &enable, sizeof(socklen_t)) < 0) return false;
-   return bind(this->sockfd,(struct sockaddr *)&this->serverAddress, sizeof(this->serverAddress));
-}
-
-
 void Server :: cast(){
-    listen(this->sockfd, this->num_of_clients);
+    Node * connection = this->llist;
+    while(connection != nullptr){
+        if(is_alive(connection)) recive(connection);
+        connection = connection->next;
+    }
+    listen(this->server_socket, this->max_num);
+    add_connection();
 }
 
 
-void Server add_connection(){
-}
-
-
-void Server :: recv(struct sockaddr_in * client, int sock){
-    recv(sock, &this->buffer, sizeof(this->buffer), 0);
+void Server :: recive(Node * connection){
+    if(recv(connection->sock, &this->buffer, sizeof(this->buffer), 0) < 0) {
+        cerr << "Receiving error";
+        if(is_alive(connection)) cerr << "But connection is alive";
+        else cerr << "Because connection is dead";
+    }
     string telemetry(this->buffer);
-    cout << "From " << inet_ntoa(client->sin_addr->S_addr) << " :" << telemetry << endl;
+    cout << "From " << inet_ntoa(connection->client.sin_addr.s_addr) << " :" << telemetry << endl;
     memset(this->buffer, 0, BUFSIZE);
 }
 
-
-void Server :: ether(){
-    for(size_t i = 0; i < this->num_of_clients; i++){
-        if(this->clients[i]->alive){
-            recv(&this->clients[i]->clientAdress, clients[i]->sock);
-        }
-    }
-}
+#endif //ASYNC_H

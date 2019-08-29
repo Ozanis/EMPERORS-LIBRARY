@@ -55,18 +55,21 @@ CMAKE_BINARY_DIR = /home/max/Projects/TelemetryAgent
 # The main recursive "all" target.
 all: Client/all
 all: Server/all
+all: asyncServer/all
 
 .PHONY : all
 
 # The main recursive "clean" target.
 clean: Client/clean
 clean: Server/clean
+clean: asyncServer/clean
 
 .PHONY : clean
 
 # The main recursive "preinstall" target.
 preinstall: Client/preinstall
 preinstall: Server/preinstall
+preinstall: asyncServer/preinstall
 
 .PHONY : preinstall
 
@@ -159,6 +162,51 @@ Server: Server/CMakeFiles/Server.dir/rule
 Server/CMakeFiles/Server.dir/clean:
 	$(MAKE) -f Server/CMakeFiles/Server.dir/build.make Server/CMakeFiles/Server.dir/clean
 .PHONY : Server/CMakeFiles/Server.dir/clean
+
+#=============================================================================
+# Directory level rules for directory asyncServer
+
+# Recursive "all" directory target.
+asyncServer/all: asyncServer/CMakeFiles/async.dir/all
+
+.PHONY : asyncServer/all
+
+# Recursive "clean" directory target.
+asyncServer/clean: asyncServer/CMakeFiles/async.dir/clean
+
+.PHONY : asyncServer/clean
+
+# Recursive "preinstall" directory target.
+asyncServer/preinstall:
+
+.PHONY : asyncServer/preinstall
+
+#=============================================================================
+# Target rules for target asyncServer/CMakeFiles/async.dir
+
+# All Build rule for target.
+asyncServer/CMakeFiles/async.dir/all:
+	$(MAKE) -f asyncServer/CMakeFiles/async.dir/build.make asyncServer/CMakeFiles/async.dir/depend
+	$(MAKE) -f asyncServer/CMakeFiles/async.dir/build.make asyncServer/CMakeFiles/async.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/max/Projects/TelemetryAgent/CMakeFiles --progress-num=5,6 "Built target async"
+.PHONY : asyncServer/CMakeFiles/async.dir/all
+
+# Build rule for subdir invocation for target.
+asyncServer/CMakeFiles/async.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/max/Projects/TelemetryAgent/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 asyncServer/CMakeFiles/async.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/max/Projects/TelemetryAgent/CMakeFiles 0
+.PHONY : asyncServer/CMakeFiles/async.dir/rule
+
+# Convenience name for target.
+async: asyncServer/CMakeFiles/async.dir/rule
+
+.PHONY : async
+
+# clean rule for target.
+asyncServer/CMakeFiles/async.dir/clean:
+	$(MAKE) -f asyncServer/CMakeFiles/async.dir/build.make asyncServer/CMakeFiles/async.dir/clean
+.PHONY : asyncServer/CMakeFiles/async.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

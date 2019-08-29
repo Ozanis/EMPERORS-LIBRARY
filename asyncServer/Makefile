@@ -80,14 +80,14 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/max/Projects/TelemetryAgent/CMakeFiles /home/max/Projects/TelemetryAgent/CMakeFiles/progress.marks
-	$(MAKE) -f CMakeFiles/Makefile2 all
+	cd /home/max/Projects/TelemetryAgent && $(CMAKE_COMMAND) -E cmake_progress_start /home/max/Projects/TelemetryAgent/CMakeFiles /home/max/Projects/TelemetryAgent/asyncServer/CMakeFiles/progress.marks
+	cd /home/max/Projects/TelemetryAgent && $(MAKE) -f CMakeFiles/Makefile2 asyncServer/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/max/Projects/TelemetryAgent/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	$(MAKE) -f CMakeFiles/Makefile2 clean
+	cd /home/max/Projects/TelemetryAgent && $(MAKE) -f CMakeFiles/Makefile2 asyncServer/clean
 .PHONY : clean
 
 # The main clean target
@@ -97,57 +97,60 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	$(MAKE) -f CMakeFiles/Makefile2 preinstall
+	cd /home/max/Projects/TelemetryAgent && $(MAKE) -f CMakeFiles/Makefile2 asyncServer/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	$(MAKE) -f CMakeFiles/Makefile2 preinstall
+	cd /home/max/Projects/TelemetryAgent && $(MAKE) -f CMakeFiles/Makefile2 asyncServer/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/max/Projects/TelemetryAgent && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
-#=============================================================================
-# Target rules for targets named Client
+# Convenience name for target.
+asyncServer/CMakeFiles/async.dir/rule:
+	cd /home/max/Projects/TelemetryAgent && $(MAKE) -f CMakeFiles/Makefile2 asyncServer/CMakeFiles/async.dir/rule
+.PHONY : asyncServer/CMakeFiles/async.dir/rule
 
-# Build rule for target.
-Client: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 Client
-.PHONY : Client
+# Convenience name for target.
+async: asyncServer/CMakeFiles/async.dir/rule
 
-# fast build rule for target.
-Client/fast:
-	$(MAKE) -f Client/CMakeFiles/Client.dir/build.make Client/CMakeFiles/Client.dir/build
-.PHONY : Client/fast
-
-#=============================================================================
-# Target rules for targets named Server
-
-# Build rule for target.
-Server: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 Server
-.PHONY : Server
-
-# fast build rule for target.
-Server/fast:
-	$(MAKE) -f Server/CMakeFiles/Server.dir/build.make Server/CMakeFiles/Server.dir/build
-.PHONY : Server/fast
-
-#=============================================================================
-# Target rules for targets named async
-
-# Build rule for target.
-async: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 async
 .PHONY : async
 
 # fast build rule for target.
 async/fast:
-	$(MAKE) -f asyncServer/CMakeFiles/async.dir/build.make asyncServer/CMakeFiles/async.dir/build
+	cd /home/max/Projects/TelemetryAgent && $(MAKE) -f asyncServer/CMakeFiles/async.dir/build.make asyncServer/CMakeFiles/async.dir/build
 .PHONY : async/fast
+
+async.o: async.cpp.o
+
+.PHONY : async.o
+
+# target to build an object file
+async.cpp.o:
+	cd /home/max/Projects/TelemetryAgent && $(MAKE) -f asyncServer/CMakeFiles/async.dir/build.make asyncServer/CMakeFiles/async.dir/async.cpp.o
+.PHONY : async.cpp.o
+
+async.i: async.cpp.i
+
+.PHONY : async.i
+
+# target to preprocess a source file
+async.cpp.i:
+	cd /home/max/Projects/TelemetryAgent && $(MAKE) -f asyncServer/CMakeFiles/async.dir/build.make asyncServer/CMakeFiles/async.dir/async.cpp.i
+.PHONY : async.cpp.i
+
+async.s: async.cpp.s
+
+.PHONY : async.s
+
+# target to generate assembly for a file
+async.cpp.s:
+	cd /home/max/Projects/TelemetryAgent && $(MAKE) -f asyncServer/CMakeFiles/async.dir/build.make asyncServer/CMakeFiles/async.dir/async.cpp.s
+.PHONY : async.cpp.s
 
 # Help Target
 help:
@@ -156,10 +159,11 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... rebuild_cache"
-	@echo "... edit_cache"
-	@echo "... Client"
-	@echo "... Server"
 	@echo "... async"
+	@echo "... edit_cache"
+	@echo "... async.o"
+	@echo "... async.i"
+	@echo "... async.s"
 .PHONY : help
 
 
@@ -171,6 +175,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/max/Projects/TelemetryAgent && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

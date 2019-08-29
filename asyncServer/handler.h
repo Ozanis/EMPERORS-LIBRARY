@@ -1,60 +1,90 @@
+#ifndef HANDLER_H
+#define HANDLER_H
+
 #include "linkedlist.h"
 
+using std :: cerr;         
+using std :: cout;         
+using std :: endl;         
 
-class Handler : public LinkedList{
+
+class Handler{
     public:
-        Handler();
+        Handler(uint16_t my_port, size_t max_connectors);
         ~Handler();
+        void update();
         void add_connection();
-        void del_connection();
-        void is_alive();
-    private:
-        size_t connectors = 0, cur_num = 0;
+        bool is_alive(Node * connection);
+        size_t connectors = 0, max_num = 0;
+        uint16_t port = 0;
+        Node * llist;
+        Node * last_node;
 }
 
 
-void Handler :: is_alive(){
-    size_t set = 0;
-    if(FD_ISSET(this->guest_port[i], handle_read)) ++set;
-    else{
-        if(!this->cur_num) break;
-        else --this->cur_num;
-        this->clients[i]->alive = false;
-        try{
-             shutdown(this->clients[i]->sock, 2);
-             close(this->clients[i]->sock);
-             memset(&this->clients[i]->sock, 0, sizeof(int));
-             }
-        throw exception("Socket have closed already");
-     }
+Handler :: Handler(uint16_t my_port, size_t max_connectors){
+    this->llist = new Node(my_port);
+    this->port = my_port;
+    this->max_num = max_connectors;
 }
 
 
-void Server add_connection(){
-     if(this->cur_num >= this->num_of_clients)
-        Cerr << "Connectors num overflow";
-        return;
-     int newsockfd = accept(this->sockfd, (sockaddr*)&this->clients->clientAddress, (socklen_t*)&    clients->this->len);
-     if(this->newsockfd < 0){
-         cerr << "Acception error";
-         return;
-     }
-     for(size_t i = 0; i < this->num_of_client; i++){
-         if(!this->clients[i]->alive){
-             this->clients[i]->alive = true;
-             this->clients[i]->sock = newsockfd;
+bool Handler :: is_alive(Node * connection){
+    if(this->connectors){
+        size_t set = 0;
+        if(!FD_ISSET(connection->sock, handle_read)){
+            try{
+                 delete(connection);
+            }
+            catch(Node * connection){
+                throw std::exception("Socket have been closed already");
+                connection->alive = false;
+                connection = nullptr;
+            }
          }
-     }
-     ++this->cur_num;
- }
+        return false;
+    }
+    return true;
+}
 
 
-void Handler :: del_connection(){
+void Handler :: update(){
+    size_t cons = 0;
+    Node * connection = this->llist;
+    do {
+        if(is_alive(connection)) ++cons;
+        connection = connection->next;
+    } while(connection != nullptr);
+    this->connectors = cons;
+    this->last_node = connection;
+}
 
+
+void Handler :: add_connection(){
+    if(this->connectors >= this->max_num){
+       cerr << "Connectors num overflow";
+       return;
+    }
+    this->last_node = this->last_node->next;
+    this->last_node = Node();
+    this->last_node.set(this->port++);
+    int port_id = accept(this->last_node->sock, (sockaddr*)&this->last_node->client, (socklen_t*)&this->last_node->len);
+        if(port_id < 0){
+        cerr << "Acception error";
+        return;
+    }
+    this->last->node->set(port_id);
+    ++this->connectors;
 }
 
 
 Handler :: ~Handler(){
-
-
+    Node * last = this->llist;
+    Node * next = this->llist;
+    while(next != nullptr){
+        next = last->next;
+        delete(&last);
+    }
 }
+
+#endif //HANDLER_H
