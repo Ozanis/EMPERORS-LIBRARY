@@ -56,9 +56,7 @@ void Server :: cast(){
     while(connection != nullptr){
         if(is_alive(connection)) recive(connection);
         connection = connection->next;
-    }
-    listen(this->server_socket, this->max_num);
-    add_connection();
+   }
 }
 
 
@@ -72,5 +70,15 @@ void Server :: recive(Node * connection){
     cout << "From " << inet_ntoa(connection->client.sin_addr.s_addr) << " :" << telemetry << endl;
     memset(this->buffer, 0, BUFSIZE);
 }
+
+
+class AsyncServer : public Server{
+    public:
+        AsyncServer();
+        ~AsyncServer();
+
+}
+
+
 
 #endif //ASYNC_H

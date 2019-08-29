@@ -1,4 +1,4 @@
-#include "async.h"
+#include "asyncServer.h"
 
 
 static const uint16_t my_port = 44300;
@@ -9,6 +9,7 @@ static const size_t con_limit = 5;
 
 
 int main(){
+    load_crypto();
     Server server(my_addr, my_port, con_limit);
     while(1){
         server.cast();

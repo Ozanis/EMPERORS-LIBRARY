@@ -15,6 +15,7 @@ class Handler{
         void update();
         void add_connection();
         bool is_alive(Node * connection);
+        void handle_connections();
         size_t connectors = 0, max_num = 0;
         uint16_t port = 0;
         Node * llist;
@@ -75,6 +76,12 @@ void Handler :: add_connection(){
     }
     this->last->node->set(port_id);
     ++this->connectors;
+}
+
+
+void Handler :: handle_connections(){
+    listen(this->server_socket, this->max_num);
+    add_connection();
 }
 
 
