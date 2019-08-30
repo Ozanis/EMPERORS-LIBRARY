@@ -6,11 +6,11 @@
 
 #IncludeRegexTransform: 
 
-/home/max/Projects/TelemetryAgent/asyncServer/async.cpp
-async.h
-/home/max/Projects/TelemetryAgent/asyncServer/async.h
+/home/max/Projects/TelemetryAgent/asyncServer/asyncServer.cpp
+asyncServer.h
+/home/max/Projects/TelemetryAgent/asyncServer/asyncServer.h
 
-/home/max/Projects/TelemetryAgent/asyncServer/async.h
+/home/max/Projects/TelemetryAgent/asyncServer/asyncServer.h
 iostream
 -
 thread
@@ -27,6 +27,10 @@ linkedlist.h
 /home/max/Projects/TelemetryAgent/asyncServer/linkedlist.h
 
 /home/max/Projects/TelemetryAgent/asyncServer/linkedlist.h
+sockWrapper.h
+/home/max/Projects/TelemetryAgent/asyncServer/sockWrapper.h
+
+/home/max/Projects/TelemetryAgent/asyncServer/sockWrapper.h
 sys/types.h
 -
 sys/socket.h
@@ -38,5 +42,9 @@ netinet/tcp.h
 netdb.h
 -
 arpa/inet.h
+-
+poll.h
+-
+iostream
 -
 

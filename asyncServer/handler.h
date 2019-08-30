@@ -3,6 +3,7 @@
 
 #include "linkedlist.h"
 
+
 using std :: cerr;         
 using std :: cout;         
 using std :: endl;         
@@ -10,87 +11,70 @@ using std :: endl;
 
 class Handler{
     public:
-        Handler(uint16_t my_port, size_t max_connectors);
+        Handler(const char * addr, uint16_t port, size_t max_connectors);
         ~Handler();
         void update();
         void add_connection();
-        bool is_alive(Node * connection);
-        void handle_connections();
+        bool is_alive(int id);
+
         size_t connectors = 0, max_num = 0;
-        uint16_t port = 0;
-        Node * llist;
-        Node * last_node;
-}
+        uint16_t port_handler = 0;
+        struct pollfd fds;
+        Node * linkedlist;
+};
 
 
-Handler :: Handler(uint16_t my_port, size_t max_connectors){
-    this->llist = new Node(my_port);
-    this->port = my_port;
+Handler :: Handler(const char * addr, uint16_t port, size_t max_connectors){
+    this->linkedlist = new Node(addr, port);
+    this->port_handler = port;
     this->max_num = max_connectors;
 }
 
 
-bool Handler :: is_alive(Node * connection){
-    if(this->connectors){
-        size_t set = 0;
-        if(!FD_ISSET(connection->sock, handle_read)){
-            try{
-                 delete(connection);
-            }
-            catch(Node * connection){
-                throw std::exception("Socket have been closed already");
-                connection->alive = false;
-                connection = nullptr;
-            }
-         }
-        return false;
-    }
-    return true;
+bool Handler :: is_alive(int id){
+    this->fds.fd = id;
+    this->fds.events = POLLIN;
+    int ret = poll(&this->fds, sizeof(this->fds), 10);
+    this->fds.revents = 0;
+    return ret & POLLIN;
 }
 
 
 void Handler :: update(){
     size_t cons = 0;
-    Node * connection = this->llist;
-    do {
-        if(is_alive(connection)) ++cons;
+    Node * connection = this->linkedlist;
+    while(connection != nullptr){
+        if(is_alive(connection->sock_id)) ++cons;
+        else{
+            Node * temp = connection->pop(connection);
+            if(temp != nullptr){
+                delete(temp);
+                connection->next = temp;
+            }
+        }
         connection = connection->next;
-    } while(connection != nullptr);
+    }
     this->connectors = cons;
-    this->last_node = connection;
 }
 
 
 void Handler :: add_connection(){
-    if(this->connectors >= this->max_num){
-       cerr << "Connectors num overflow";
-       return;
+    if(this->connectors >= this->max_num) cerr << "Connectors number overflow";
+    else{
+        addNode(INADDR_ANY, this->port_handler++);
+        ++this->connectors;
     }
-    this->last_node = this->last_node->next;
-    this->last_node = Node();
-    this->last_node.set(this->port++);
-    int port_id = accept(this->last_node->sock, (sockaddr*)&this->last_node->client, (socklen_t*)&this->last_node->len);
-        if(port_id < 0){
-        cerr << "Acception error";
-        return;
-    }
-    this->last->node->set(port_id);
-    ++this->connectors;
-}
-
-
-void Handler :: handle_connections(){
-    listen(this->server_socket, this->max_num);
-    add_connection();
 }
 
 
 Handler :: ~Handler(){
-    Node * last = this->llist;
-    Node * next = this->llist;
-    while(next != nullptr){
-        next = last->next;
-        delete(&last);
+    if(this->linkedlist != nullptr){
+        Node * next = this->linkedlist;
+        while(next != nullptr){
+            Node * cur = next;
+            next = cur->next;
+            delete(cur);
+        }
     }
 }
 
