@@ -10,35 +10,29 @@ using std :: endl;
 
 class Node : public sockWrapper{
     public:
-        using sockWrapper :: sockWrapper;
-
-        Node(const char * addr, uint16_t port);
-        void addNode(uint16_t port);
-        Node * pop(Node * node);
-        ~Node() = default;
-
+        explicit Node(uint16_t port) : sockWrapper(port){};
+        void add(uint16_t port);
+        ~Node();
+        Node * prev = nullptr;
         Node * next = nullptr;
 };
 
 
-void Node :: addNode(const char * addr, uint16_t port){
-    this->next = new Node(addr, port);
-    cout << "Added node "<< port << endl;
+void Node :: add(uint16_t port){
+    cout << "Adding node" << endl;
+    Node * temp = this->next;
+    while(temp != nullptr) temp = temp->next;
+    temp = new Node(port);
+    delete(temp);
 }
 
 
-Node * Node :: pop(Node * node){
-    if (node == nullptr){
-        cerr << "Non-existent node" ;
-        return nullptr;
-        }
-    if(this->next != nullptr){
-       delete(node);
-       return this->next;
-    }
+Node :: ~Node(){
+    if(this->next != nullptr && this->prev == nullptr) this->next->prev = nullptr;
+    else if(this->next == nullptr && this->prev != nullptr) this->prev->next = nullptr;
     else{
-        cout << "Nothing to pop" << endl;
-        return node;
+        this->prev = this->next;
+        this->next = this->prev;
     }
 }
 

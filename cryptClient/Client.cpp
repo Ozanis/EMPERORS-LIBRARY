@@ -12,7 +12,7 @@ int main() {
     string data;
 
     Client clnt(from_addr, from_port, to_addr, to_port);
-    if(clnt.Up() < 0){
+    if(!clnt.Up()){
         cerr << "Connect error";
         clnt.~Client();
         _exit(0);
@@ -21,7 +21,6 @@ int main() {
         data = cpu_num() + get_cpu() + process_mem_usage() + physical_mem_usage();
         cout << data << endl;
         clnt.Send(data);
-//        sleep(3);
     }
     return 0;
 }

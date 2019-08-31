@@ -20,7 +20,7 @@ string physical_mem_usage(){
     _hdd1 = floor(_hdd1*100)/100;
     _hdd2 = floor(_hdd2*100)/100;
 
-    return to_string(_hdd1)+"/"+to_string(_hdd2)+"/";
+    return "HDD: " + to_string(_hdd1)+"/"+to_string(_hdd2);
 }
 
 string process_mem_usage(){
@@ -43,6 +43,6 @@ string process_mem_usage(){
     resident_set = (rss * page_size_kb)/1024.0;
     resident_set=floor(resident_set*100)/100;
 
-    return to_string(vm_usage)+"/"+to_string(resident_set);
+    return "RAM: " + to_string(vm_usage)+"/"+to_string(resident_set) + "/";
 }
 

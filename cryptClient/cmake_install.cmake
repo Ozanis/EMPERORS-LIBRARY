@@ -1,4 +1,4 @@
-# Install script for directory: /home/max/Projects/TelemetryAgent/Client
+# Install script for directory: /home/max/Projects/TelemetryAgent/cryptClient
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

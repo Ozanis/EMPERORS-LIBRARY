@@ -11,7 +11,7 @@ using std :: endl;
 
 class Handler{
     public:
-        Handler(const char * addr, uint16_t port, size_t max_connectors);
+        Handler(uint16_t port, size_t max_connectors);
         ~Handler();
         void update();
         void add_connection();
@@ -19,24 +19,25 @@ class Handler{
 
         size_t connectors = 0, max_num = 0;
         uint16_t port_handler = 0;
-        struct pollfd fds;
-        Node * linkedlist;
+        Node * linkedlist = nullptr;
 };
 
 
-Handler :: Handler(const char * addr, uint16_t port, size_t max_connectors){
-    this->linkedlist = new Node(addr, port);
+Handler :: Handler(uint16_t port, size_t max_connectors){
+    cout << "Initi handler" << endl;
+    this->linkedlist = new Node(port++);
+    cout << "linkedlist created" << endl;
     this->port_handler = port;
     this->max_num = max_connectors;
 }
 
 
 bool Handler :: is_alive(int id){
-    this->fds.fd = id;
-    this->fds.events = POLLIN;
-    int ret = poll(&this->fds, sizeof(this->fds), 10);
-    this->fds.revents = 0;
-    return ret & POLLIN;
+    int error_code = -1;
+    getsockopt(id, SOL_SOCKET, SO_ERROR, &error_code, (socklen_t*)sizeof(error_code));
+    if(error_code == 0) cout << "Alive" << endl;
+    else cout << "Dead" << endl;
+    return error_code == 0;
 }
 
 
@@ -45,37 +46,34 @@ void Handler :: update(){
     Node * connection = this->linkedlist;
     while(connection != nullptr){
         if(is_alive(connection->sock_id)) ++cons;
-        else{
-            Node * temp = connection->pop(connection);
-            if(temp != nullptr){
-                delete(temp);
-                connection->next = temp;
-            }
-        }
         connection = connection->next;
-    }
+        }
     this->connectors = cons;
 }
 
 
 void Handler :: add_connection(){
-    if(this->connectors >= this->max_num) cerr << "Connectors number overflow";
+    cout << "Adding new connector to linkedlist" << endl;
+    if(this->connectors >= this->max_num) cerr << "Connectors number overflow" << endl;
     else{
-        addNode(INADDR_ANY, this->port_handler++);
+        this->linkedlist->add(this->port_handler++);
         ++this->connectors;
+        cout << "Current num of connectors" << endl;
     }
 }
 
 
 Handler :: ~Handler(){
+    cout << "Destruction of handler" << endl;
+    /*
     if(this->linkedlist != nullptr){
-        Node * next = this->linkedlist;
-        while(next != nullptr){
-            Node * cur = next;
-            next = cur->next;
+        Node * prev = this->linkedlist;
+        while(prev != nullptr){
+            Node * cur = prev;
+            prev = cur->prev;
             delete(cur);
         }
-    }
+#endif    }*/
 }
 
 #endif //HANDLER_H
