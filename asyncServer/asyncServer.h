@@ -1,10 +1,7 @@
 #ifndef ASYNC_H
 #define ASYNC_H
 
-#include <iostream>
 #include <thread>
-#include <unistd.h>
-#include "string.h"
 #include "handler.h"
 
 #define BUFFSIZE 1024
@@ -16,57 +13,38 @@ using std :: cerr;
 using std :: string;
 
 
-class Server : public Handler {
+class Server : public Handler, ServerSock{
     public:
-       Server(const char * addr, uint16_t port, size_t max_connectors);
+       explicit Server(const char * addr, uint16_t port, size_t max_connectors) : Handler(max_connectors), ServerSock(addr, port, max_connectors);
        ~Server() = default;
        void recive(Node * connection);
        void display(Node * connection);
        void cast();
 
-       sockWrapper * server_socket; //(const char * addr, uint16_t port);
-       char buffer[BUFFSIZE];
+       char buffer[BUFFSIZE]{0};
 };
 
 
-Server :: Server(const char * addr, uint16_t port, size_t max_connectors) : Handler(port, max_connectors){
-    cout << "Server creation" << endl;
-    this->server_socket = new sockWrapper(addr, port);
-    this->server_socket->_bind();
-    socklen_t opt = 1;
-    switch(setsockopt(this->server_socket->sock_id, IPPROTO_TCP, SO_REUSEADDR, &opt, sizeof(opt))){
-        case(EBADF) : cerr << "Wrong descriptor" << endl; break;
-        case(ENOTSOCK) : cerr << "Not socket object" << endl; break;
-        case(EFAULT) : cerr << "Forbiden adress" << endl; break;
-        case(EINVAL) : cerr << "Wrong optlen" << endl; break;
-        case(ENOPROTOOPT) : cerr << "Unknown flag" <<endl; break;
-        default: cout << "Socket option set" << endl;
-    }
-//    this->buffer = new char[sizeof(char)*BUFFSIZE];
-}
-
-
 void Server :: cast(){
-    cout << "Cast loop iteration" << endl;
-    Node * connection = this->linkedlist;
-    while(connection != nullptr){
+    if(this->connectors == 0) cout << "No clietns" << endl;
+    else{
+     cout << "Cast loop iteration" << endl;
+     Node * connection = this->linkedlist;
+     while(connection != nullptr){
         Node * temp = connection;
         connection = temp->next;
         cout << "Check connection" << endl;
-        if(is_alive(temp->sock_id)){
-            cout << "Alive!" << endl;
-            recive(connection);
+        connection->_recive(this->buffer);
         }
-        cout << "Switching to the next connection" << endl;
-    }
+    cout << "Switching to the next connection" << endl;
+     }
 }
 
 
 void Server :: display(Node * connection){
     cout << "displaying" << endl;
     char * host = inet_ntoa(connection->addrStruct.sin_addr);
-    std :: string str(host);
-    string telemetry(this->buffer);
+    string str(host), telemetry(this->buffer);
     cout << "From " << str << " : " << telemetry << endl;
     delete(&telemetry);
     delete(&str);
@@ -76,8 +54,11 @@ void Server :: display(Node * connection){
 
 void Server :: recive(Node * connection){
     cout << "Start to recive" << endl;
-    this->server_socket->_recv(this->buffer);
-    display(connection);
+    if (connection->_recv(this->buffer)) display(connection);
+    else{
+        cerr << "Dead connection" << endl;
+        delete connection;
+    }
 }
 
 
@@ -91,8 +72,7 @@ class AsyncServer : public Server{
 
 void AsyncServer :: asyncCast(){
     cast();
-    this->server_socket->_listen(this->max_num);
-    add_connection();
+    if (this->server_socket->_listen()) add_connection();
 }
 
 

@@ -1,1 +1,1 @@
-/usr/bin/c++     CMakeFiles/Async.dir/asyncServer.cpp.o  -o Async 
+/usr/bin/c++  -g -Wall   CMakeFiles/Async.dir/asyncServer.cpp.o  -o Async 

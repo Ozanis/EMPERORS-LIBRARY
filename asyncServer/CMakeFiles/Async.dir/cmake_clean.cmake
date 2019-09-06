@@ -1,7 +1,7 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/Async.dir/asyncServer.cpp.o"
-  "Async.pdb"
   "Async"
+  "Async.pdb"
+  "CMakeFiles/Async.dir/asyncServer.cpp.o"
 )
 
 # Per-language clean rules from dependency scanning.

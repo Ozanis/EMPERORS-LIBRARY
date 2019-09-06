@@ -17,8 +17,8 @@ thread
 -
 unistd.h
 -
-string.h
-/home/max/Projects/TelemetryAgent/asyncServer/string.h
+cstring
+/home/max/Projects/TelemetryAgent/asyncServer/cstring
 handler.h
 /home/max/Projects/TelemetryAgent/asyncServer/handler.h
 

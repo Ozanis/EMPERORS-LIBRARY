@@ -8,9 +8,9 @@ using std :: cout;
 using std :: endl;
 
 
-class Node : public sockWrapper{
+class Node : public Connector{
     public:
-        explicit Node(uint16_t port) : sockWrapper(port){};
+        explicit Node(int id, uint16_t port) : Connector(id, port){};
         void add(uint16_t port);
         ~Node();
         Node * prev = nullptr;
@@ -23,7 +23,7 @@ void Node :: add(uint16_t port){
     Node * temp = this->next;
     while(temp != nullptr) temp = temp->next;
     temp = new Node(port);
-    delete(temp);
+//    delete(&temp);
 }
 
 

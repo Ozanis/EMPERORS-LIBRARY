@@ -43,8 +43,6 @@ Client :: Client(const char * from_addr, uint16_t from_port, const char * to_add
 
 Client :: ~Client(){
     close(this->sockfd);
-    delete(&serverAddress);
-    delete(&clientAddress);
 }
 
 
