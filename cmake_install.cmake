@@ -39,8 +39,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/max/Projects/TelemetryAgent/Client/cmake_install.cmake")
-  include("/home/max/Projects/TelemetryAgent/Server/cmake_install.cmake")
+  include("/home/max/Projects/TelemetryAgent/cryptClient/cmake_install.cmake")
   include("/home/max/Projects/TelemetryAgent/asyncServer/cmake_install.cmake")
 
 endif()

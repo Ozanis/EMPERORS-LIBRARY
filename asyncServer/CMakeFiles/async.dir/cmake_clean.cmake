@@ -1,5 +1,5 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/async.dir/async.cpp.o"
+  "CMakeFiles/async.dir/asyncServer.cpp.o"
   "async"
   "async.pdb"
 )

@@ -106,9 +106,9 @@ string get_cpu(){
     this_thread::sleep_for(chrono::milliseconds(200));
     ReadStatsCPU(entries2);
     PrintStats(entries1, entries2, _cp);
-    return to_string(_cp)+"/";
+    return "CPU: " + to_string(_cp) + "/";
 }
 
 string cpu_num(){
-    return to_string(sysconf(_SC_NPROCESSORS_ONLN))+"/";
+    return "CPU_num: " + to_string(sysconf(_SC_NPROCESSORS_ONLN))+"/";
 }

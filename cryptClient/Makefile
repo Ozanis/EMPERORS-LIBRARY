@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/max/Projects/TelemetryAgent
+CMAKE_SOURCE_DIR = /home/max/Projects/TelemetryAgent/cryptClient
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/max/Projects/TelemetryAgent
+CMAKE_BINARY_DIR = /home/max/Projects/TelemetryAgent/cryptClient
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,14 +80,14 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/max/Projects/TelemetryAgent && $(CMAKE_COMMAND) -E cmake_progress_start /home/max/Projects/TelemetryAgent/CMakeFiles /home/max/Projects/TelemetryAgent/Client/CMakeFiles/progress.marks
-	cd /home/max/Projects/TelemetryAgent && $(MAKE) -f CMakeFiles/Makefile2 Client/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/max/Projects/TelemetryAgent/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/max/Projects/TelemetryAgent/cryptClient/CMakeFiles /home/max/Projects/TelemetryAgent/cryptClient/CMakeFiles/progress.marks
+	$(MAKE) -f CMakeFiles/Makefile2 all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/max/Projects/TelemetryAgent/cryptClient/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/max/Projects/TelemetryAgent && $(MAKE) -f CMakeFiles/Makefile2 Client/clean
+	$(MAKE) -f CMakeFiles/Makefile2 clean
 .PHONY : clean
 
 # The main clean target
@@ -97,32 +97,30 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/max/Projects/TelemetryAgent && $(MAKE) -f CMakeFiles/Makefile2 Client/preinstall
+	$(MAKE) -f CMakeFiles/Makefile2 preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/max/Projects/TelemetryAgent && $(MAKE) -f CMakeFiles/Makefile2 Client/preinstall
+	$(MAKE) -f CMakeFiles/Makefile2 preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/max/Projects/TelemetryAgent && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
-# Convenience name for target.
-Client/CMakeFiles/Client.dir/rule:
-	cd /home/max/Projects/TelemetryAgent && $(MAKE) -f CMakeFiles/Makefile2 Client/CMakeFiles/Client.dir/rule
-.PHONY : Client/CMakeFiles/Client.dir/rule
+#=============================================================================
+# Target rules for targets named Client
 
-# Convenience name for target.
-Client: Client/CMakeFiles/Client.dir/rule
-
+# Build rule for target.
+Client: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 Client
 .PHONY : Client
 
 # fast build rule for target.
 Client/fast:
-	cd /home/max/Projects/TelemetryAgent && $(MAKE) -f Client/CMakeFiles/Client.dir/build.make Client/CMakeFiles/Client.dir/build
+	$(MAKE) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/build
 .PHONY : Client/fast
 
 Client.o: Client.cpp.o
@@ -131,7 +129,7 @@ Client.o: Client.cpp.o
 
 # target to build an object file
 Client.cpp.o:
-	cd /home/max/Projects/TelemetryAgent && $(MAKE) -f Client/CMakeFiles/Client.dir/build.make Client/CMakeFiles/Client.dir/Client.cpp.o
+	$(MAKE) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/Client.cpp.o
 .PHONY : Client.cpp.o
 
 Client.i: Client.cpp.i
@@ -140,7 +138,7 @@ Client.i: Client.cpp.i
 
 # target to preprocess a source file
 Client.cpp.i:
-	cd /home/max/Projects/TelemetryAgent && $(MAKE) -f Client/CMakeFiles/Client.dir/build.make Client/CMakeFiles/Client.dir/Client.cpp.i
+	$(MAKE) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/Client.cpp.i
 .PHONY : Client.cpp.i
 
 Client.s: Client.cpp.s
@@ -149,7 +147,7 @@ Client.s: Client.cpp.s
 
 # target to generate assembly for a file
 Client.cpp.s:
-	cd /home/max/Projects/TelemetryAgent && $(MAKE) -f Client/CMakeFiles/Client.dir/build.make Client/CMakeFiles/Client.dir/Client.cpp.s
+	$(MAKE) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/Client.cpp.s
 .PHONY : Client.cpp.s
 
 # Help Target
@@ -175,6 +173,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/max/Projects/TelemetryAgent && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 
