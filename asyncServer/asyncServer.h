@@ -11,6 +11,8 @@ using std :: cerr;
 using std :: string;
 
 
+
+
 class Server : public Handler, public  ServerSock{
     public:
        explicit Server(const char * addr, uint16_t port) : Handler(port), ServerSock(addr, port){};
@@ -65,16 +67,22 @@ class AsyncServer : public Server{
         explicit AsyncServer(const char * addr, uint16_t port) : Server(addr, port){};
         ~AsyncServer() = default;
         void asyncCast();
+        void asyncListen();
 };
+
+
+void AsyncServer :: asyncListen(){
+    if (this->listen_wr()){
+        cout << "Adding connection" << endl;
+        add_connection(this->id);
+    }
+}
 
 
 void AsyncServer :: asyncCast(){
     cout << "Cast" << endl;
     cast();
-    if (this->listen_wr()){
-        cout << "Adding connection" << endl;
-        add_connection(this->id);
-    }
+    asyncListen();
 }
 
 

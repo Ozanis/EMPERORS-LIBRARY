@@ -13,6 +13,7 @@ class Node : public Connector{
         explicit Node(int id, uint16_t port) : Connector(id, port){};
         void add(int id, uint16_t port);
         ~Node();
+
         Node * prev = nullptr;
         Node * next = nullptr;
 };

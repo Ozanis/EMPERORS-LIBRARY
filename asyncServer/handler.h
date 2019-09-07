@@ -50,8 +50,7 @@ void Handler :: add_connection(int id){
 
 
 Handler :: ~Handler(){
-    cout << "Destruction of handler" << endl;
-    /*
+/*    cout << "Destruction of handler" << endl;
     if(this->linkedlist != nullptr){
         Node * prev = this->linkedlist;
         while(prev != nullptr){
