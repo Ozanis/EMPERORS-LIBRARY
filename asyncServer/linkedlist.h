@@ -11,18 +11,21 @@ using std :: endl;
 class Node : public Connector{
     public:
         explicit Node(int id, uint16_t port) : Connector(id, port){};
-        void add(uint16_t port);
+        void add(int id, uint16_t port);
         ~Node();
         Node * prev = nullptr;
         Node * next = nullptr;
 };
 
 
-void Node :: add(uint16_t port){
+void Node :: add(int id, uint16_t port){
     cout << "Adding node" << endl;
     Node * temp = this->next;
-    while(temp != nullptr) temp = temp->next;
-    temp = new Node(port);
+    while(temp != nullptr){
+        temp = temp->next;
+        cout << "Updatig" << endl;
+    }
+    temp = new Node(id, port);
 //    delete(&temp);
 }
 

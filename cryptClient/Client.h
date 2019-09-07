@@ -21,7 +21,6 @@ public:
     void Send(const string & data);
     char * message = nullptr;
 
-private:
     struct sockaddr_in serverAddress;
     struct sockaddr_in clientAddress;
     int sockfd = 0;
@@ -33,12 +32,12 @@ Client :: Client(const char * from_addr, uint16_t from_port, const char * to_add
     if(!this->sockfd) cerr << "Error of socket opening-1";
 
     this->serverAddress.sin_family = AF_INET;
-    this->serverAddress.sin_addr.s_addr = inet_addr(from_addr);
-    this->serverAddress.sin_port = htons(from_port);
+    this->serverAddress.sin_addr.s_addr = inet_addr(to_addr);
+    this->serverAddress.sin_port = htons(to_port);
 
     this->clientAddress.sin_family = AF_INET;
-    this->clientAddress.sin_addr.s_addr = inet_addr(to_addr);
-    this->clientAddress.sin_port = htons(to_port);
+    this->clientAddress.sin_addr.s_addr = inet_addr(from_addr);
+    this->clientAddress.sin_port = htons(from_port);
 }
 
 Client :: ~Client(){

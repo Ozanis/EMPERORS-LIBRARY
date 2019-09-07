@@ -4,8 +4,6 @@
 #include <thread>
 #include "handler.h"
 
-#define BUFFSIZE 1024
-
 
 using std :: cout;
 using std :: endl;
@@ -13,16 +11,37 @@ using std :: cerr;
 using std :: string;
 
 
-class Server : public Handler, ServerSock{
+class Server : public Handler, public  ServerSock{
     public:
-       explicit Server(const char * addr, uint16_t port, size_t max_connectors) : Handler(max_connectors), ServerSock(addr, port, max_connectors);
+       explicit Server(const char * addr, uint16_t port) : Handler(port), ServerSock(addr, port){};
        ~Server() = default;
        void recive(Node * connection);
        void display(Node * connection);
        void cast();
-
-       char buffer[BUFFSIZE]{0};
 };
+
+
+void Server :: recive(Node * connection){
+    cout << "Start to recive" << endl;
+    if (connection->recv_wr()) display(connection);
+    else{
+        cerr << "Dead connection" << endl;
+        --this->connectors;
+        delete connection;
+    }
+}
+
+
+void Server :: display(Node * connection){
+    cout << "displaying" << endl;
+    char * host = inet_ntoa(connection->addrStruct.sin_addr);
+    string str(host), telemetry(connection->buffer);
+    cout << "---> " << str << " : " << telemetry << endl;
+//    connection->buffer = {0};
+//    delete(telemetry);
+//    delete(str);
+//    delete(host);
+}
 
 
 void Server :: cast(){
@@ -34,45 +53,28 @@ void Server :: cast(){
         Node * temp = connection;
         connection = temp->next;
         cout << "Check connection" << endl;
-        connection->_recive(this->buffer);
+        recive(temp);
         }
-    cout << "Switching to the next connection" << endl;
+     cout << "Switching to the next connection" << endl;
      }
-}
-
-
-void Server :: display(Node * connection){
-    cout << "displaying" << endl;
-    char * host = inet_ntoa(connection->addrStruct.sin_addr);
-    string str(host), telemetry(this->buffer);
-    cout << "From " << str << " : " << telemetry << endl;
-    delete(&telemetry);
-    delete(&str);
-    delete(host);
-}
-
-
-void Server :: recive(Node * connection){
-    cout << "Start to recive" << endl;
-    if (connection->_recv(this->buffer)) display(connection);
-    else{
-        cerr << "Dead connection" << endl;
-        delete connection;
-    }
 }
 
 
 class AsyncServer : public Server{
     public:
-        explicit AsyncServer(const char * addr, uint16_t port, size_t max_connectors) : Server(addr, port, max_connectors){};
+        explicit AsyncServer(const char * addr, uint16_t port) : Server(addr, port){};
         ~AsyncServer() = default;
         void asyncCast();
 };
 
 
 void AsyncServer :: asyncCast(){
+    cout << "Cast" << endl;
     cast();
-    if (this->server_socket->_listen()) add_connection();
+    if (this->listen_wr()){
+        cout << "Adding connection" << endl;
+        add_connection(this->id);
+    }
 }
 
 

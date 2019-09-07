@@ -11,14 +11,8 @@ asyncServer.h
 /home/max/Projects/TelemetryAgent/asyncServer/asyncServer.h
 
 /home/max/Projects/TelemetryAgent/asyncServer/asyncServer.h
-iostream
--
 thread
 -
-unistd.h
--
-cstring
-/home/max/Projects/TelemetryAgent/asyncServer/cstring
 handler.h
 /home/max/Projects/TelemetryAgent/asyncServer/handler.h
 
@@ -45,6 +39,10 @@ arpa/inet.h
 -
 poll.h
 -
+unistd.h
+/home/max/Projects/TelemetryAgent/asyncServer/unistd.h
 iostream
+-
+cstring
 -
 

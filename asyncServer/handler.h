@@ -11,45 +11,41 @@ using std :: endl;
 
 class Handler{
     public:
-        Handler(uint16_t port, size_t max_connectors);
+        explicit Handler(uint16_t port) : port_handler(port){};
         ~Handler();
         void update();
-        void add_connection();
+        void add_connection(int id);
 
-        size_t connectors = 0, max_num = 0;
+        size_t connectors = 0;
         uint16_t port_handler = 0;
-        Node * linkedlist = nullptr;
+        Node * linkedlist;
 };
-
-
-Handler :: Handler(uint16_t port, size_t max_connectors){
-    cout << "Initi handler" << endl;
-    this->linkedlist = new Node(port++);
-    cout << "linkedlist created" << endl;
-    this->port_handler = port;
-    this->max_num = max_connectors;
-}
 
 
 void Handler :: update(){
     size_t cons = 0;
     Node * connection = this->linkedlist;
     while(connection != nullptr){
-        if(connection->_is_alive()) ++cons;
+        if(connection->is_alive()) ++cons;
         connection = connection->next;
         }
     this->connectors = cons;
 }
 
 
-void Handler :: add_connection(){
-    cout << "Adding new connector to linkedlist" << endl;
-    if(this->connectors >= this->max_num) cerr << "Connectors number overflow" << endl;
-    else{
-        this->linkedlist->add(this->port_handler++);
+void Handler :: add_connection(int id){
+    cout << "Adding new connecor to linkedlist" << endl;
+    if(!this->connectors){
+        this->linkedlist = new Node(id, this->port_handler);
+        cout << "First connection" << endl;
         ++this->connectors;
-        cout << "Current num of connectors" << this->connectors << endl;
     }
+    else if(this->connectors >= QUEUE_SIZE) cerr << "Connectors number overflow" << endl;
+    else{
+        this->linkedlist->add(id, this->port_handler++);
+        ++this->connectors;
+        }
+    cout << "Current num of connectors" << this->connectors << endl;
 }
 
 

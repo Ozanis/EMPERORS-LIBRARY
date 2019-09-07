@@ -10,8 +10,10 @@
 #include <poll.h>
 #include "unistd.h"
 #include <iostream>
-#include "cstring"
+#include <cstring>
 
+#define BUFF_SIZE 1024
+#define QUEUE_SIZE 5
 
 using std :: cerr;
 using std :: cout;
@@ -19,32 +21,21 @@ using std :: endl;
 using std :: string;
 
 
-class SockWrapper{
-   public:
-        virtual bool _listen() = 0;
-        virtual bool _recv() = 0;
-        virtual bool _accept() = 0;
-        virtual bool _is_alive() = 0;
-        virtual void _send() = 0;
-}
-
-
-class ServerSock : SockWrapper{
+class ServerSock{
     public:
-        ServerSock(const char * addr, uint16_t port, size_t size);
+        ServerSock(const char * addr, uint16_t port);
         ~ServerSock();
-        bool _listen();
+        bool listen_wr();
 
-        int server_sock = 0;
-        size_t queue_size = 0;
+        int id = 0;
         struct sockaddr_in addrStruct;
 };
 
 
-ServerSock :: ServerSock(const char * addr, uint16_t port, size_t size){
-    this->server_sock = socket(AF_INET, SOCK_STREAM, 0);
+ServerSock :: ServerSock(const char * addr, uint16_t port){
+    this->id = socket(AF_INET, SOCK_STREAM, 0);
 
-    if(this->server_sock < 0) cerr << "Socket creation error" << endl;
+    if(this->id < 0) cerr << "Socket creation error" << endl;
     else cout << "Sock created" << endl;
 
     this->addrStruct.sin_family = AF_INET;
@@ -53,7 +44,7 @@ ServerSock :: ServerSock(const char * addr, uint16_t port, size_t size){
     cout << "Sock initialized " << addr << " " << port << endl;
     
     socklen_t opt = 1;
-    switch(setsockopt(this->server_sock, IPPROTO_TCP, SO_REUSEADDR, &opt, sizeof(opt))){
+    switch(setsockopt(this->id, IPPROTO_TCP, SO_REUSEADDR, &opt, sizeof(opt))){
         case(EBADF) : cerr << "Wrong descriptor" << endl; break;
         case(ENOTSOCK) : cerr << "Not socket object" << endl; break;
         case(EFAULT) : cerr << "Forbiden adress" << endl; break;
@@ -61,93 +52,89 @@ ServerSock :: ServerSock(const char * addr, uint16_t port, size_t size){
         case(ENOPROTOOPT) : cerr << "Unknown flag" <<endl; break;
         default: cout << "Socket option set" << endl; break;
     }
-
-    bind(this->sock_id, (struct sockaddr *)&this->addrStruct, sizeof(this->addrStruct));
-    if(this->sock_id < 0){
+    if(bind(this->id, (struct sockaddr *)&this->addrStruct, sizeof(this->addrStruct)) < 0){
         cerr << "Binding error" << endl;
         exit(0);
-    }
+        }
     else cout << "Socket binded" << endl;
 }
 
 
-bool ServerSock :: _listen(){
+bool ServerSock :: listen_wr(){
     cout << "Listening" << endl;
-    return listen(this->sock_id, this->queue_size) > 0;
+    return listen(this->id, QUEUE_SIZE) >= 0;
 }
 
 
 ServerSock :: ~ServerSock(){
     cout << "Socket destructor called" << endl;
-    close(this->sock_id);
+    close(this->id);
     cout << " closed connection" << endl;
     memset(&this->addrStruct, 0, sizeof(this->addrStruct));
     cout << "Memset to zero struct" << endl;
 }
 
 
-class Connector : public SockWrapper{
+class Connector{
     public:
-        Connector(int id, uint16_t port);
+        Connector(int sock, uint16_t port);
         ~Connector();
-        bool _recv(char * buffer);
-        bool _is_alive();
+        bool recv_wr();
+        bool is_alive();
 
-        int sock_id = 0;
-        struct sockaddr_in addrStruct;
-}
+        int id = 0;
+        char buffer[BUFF_SIZE];
+        struct sockaddr_in addrStruct; 
+};
 
 
-Connector :: Connector(int id, uint16_t port){
-    this->sock_id = id;
-    this->sock_id = accept(id, (struct sockaddr *)&addrStruct, (socklen_t*)&addrStruct);
-        //socket(AF_INET, SOCK_STREAM, 0);
-
-    if(this->sock_id < 0) cerr << "Acception  error" << endl;
-    else cout << "Sock created " << endl;
-
+Connector :: Connector(int sock, uint16_t port){
     this->addrStruct.sin_family = AF_INET;
-//    this->addrStruct.sin_addr.s_addr = htonl(INADDR_ANY);
+    this->addrStruct.sin_addr.s_addr = htonl(INADDR_ANY);
     this->addrStruct.sin_port = htons(port);
+
+    this->id = accept(sock, (struct sockaddr *)&addrStruct, (socklen_t*)&addrStruct);
+    if(this->id < 0) cerr << "Acception  error" << endl;
+    else cout << "Sock created: " << this->id << endl;
+
     char * addr = inet_ntoa(this->addrStruct.sin_addr);
     string s(addr);
     cout << "Sock initialized " << s << " " << port << endl;
 }
 
 
-bool Connector :: _recv(char * buffer){
-    return recv(this->sock_id, &buffer, sizeof(buffer), 0) < 0;
+bool Connector :: recv_wr(){
+    return recv(this->id, this->buffer, sizeof(this->buffer), 0) > 0;
 }
 
 
-bool Connector :: _is_alive(){
+bool Connector :: is_alive(){
     socklen_t error_code = 0;
-    getsockopt(this->sock_id, SOL_SOCKET, SO_ERROR, (socklen_t*)sizeof(error_code), &error_code);
+    getsockopt(this->id, SOL_SOCKET, SO_ERROR, (socklen_t*)sizeof(error_code), &error_code);
     if(error_code == 0) cout << "Alive" << endl;
     else cout << "Dead" << endl;
     return error_code == 0;
 }
 
 
-Connector :; ~Connector(){
-    close(this->sock_id);
+Connector :: ~Connector(){
+    close(this->id);
 }
 
 
 class ClientSock{
     ClientSock(const char * from_addr, uint16_t from_port, const char * to_addr, uint16_t to_port);
     ~ClientSock();
-    void _send(const char * data);
-
-    int sock_id = 0;
+    void send_wr(const string & data);
+    int id = 0;
     struct sockaddr_in Client;
     struct sockaddr_in Server;
-}
+};
 
 
-ClientSock :: ClientSock(const char * from_addr, uint16_t from_port, const char * to_addr, uint16_t to_port{
-   this->sock_id = socket(AF_INET, SOCK_STREAM, 0);
-   if(!this->sock_id){
+ClientSock :: ClientSock(const char * from_addr, uint16_t from_port, const char * to_addr, uint16_t to_port){
+   this->id = socket(AF_INET, SOCK_STREAM, 0);
+   if(!this->id){
        cerr << "Error client socket creation" << endl;
        exit(0);
        }
@@ -159,27 +146,26 @@ ClientSock :: ClientSock(const char * from_addr, uint16_t from_port, const char 
     this->Server.sin_addr.s_addr = inet_addr(to_addr);
     this->Server.sin_port = htons(to_port);
 
-    if(connect(this->sock_id, (struct sockaddr *) & this->Server, sizeof(this->Server)) != 0){
+    if(connect(this->id, (struct sockaddr *) & this->Server, sizeof(this->Server)) != 0){
         cerr << "Connection error" << endl;
         exit(0);
     }
-    else count << "Connection established" << endl;
+    else cout << "Connection established" << endl;
 }
 
 
-void ClientSock :: _send(const char & data){
-    size_t bufsize = data.lenght();
+void ClientSock :: send_wr(const string & data){
+    size_t bufsize = data.length();
     char * message = new char[bufsize]{0};
     strcpy(message, data.c_str());
-    if(!send(this->sock_id, message, buffsize, 0)) cerrr << "Unable to send" << endl;
+    if(!send(this->id, message, bufsize, 0)) cerr << "Unable to send" << endl;
     delete(message);
 }
 
 
 ClientSock :: ~ClientSock(){
-    close(this->sock_id);
+    close(this->id);
 }
-
 
 
 class cryptoWrapper : public ServerSock{
