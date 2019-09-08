@@ -11,6 +11,8 @@
 #include "unistd.h"
 #include <iostream>
 #include <cstring>
+#include "fcntl.h"
+
 
 #define BUFF_SIZE 1024
 #define QUEUE_SIZE 5
@@ -37,11 +39,11 @@ ServerSock :: ServerSock(const char * addr, uint16_t port){
 
     if(this->id < 0) cerr << "Socket creation error" << endl;
     else cout << "Sock created" << endl;
-
+//  cout << fcntl(this->id, F_SETFL, O_NONBLOCK) << endl;
     this->addrStruct.sin_family = AF_INET;
     this->addrStruct.sin_addr.s_addr = inet_addr(addr);
     this->addrStruct.sin_port = htons(port);
-    cout << "Sock initialized " << addr << " " << port << endl;
+    cout << "Server sock initialized " << addr << " " << port << endl;
     
     socklen_t opt = 1;
     switch(setsockopt(this->id, IPPROTO_TCP, SO_REUSEADDR, &opt, sizeof(opt))){
@@ -75,7 +77,6 @@ ServerSock :: ~ServerSock(){
 }
 
 
-
 class Connector{
     public:
         Connector(int sock, uint16_t port);
@@ -94,9 +95,11 @@ Connector :: Connector(int sock, uint16_t port){
     this->addrStruct.sin_addr.s_addr = htonl(INADDR_ANY);
     this->addrStruct.sin_port = htons(port);
 
-    this->id = accept(sock, (struct sockaddr *)&addrStruct, (socklen_t*)&addrStruct);
+    this->id = accept(sock, (struct sockaddr *)&this->addrStruct, (socklen_t*)&this->addrStruct);
+//  cout << fcntl(this->id, F_SETFL, O_NONBLOCK) << endl;
     if(this->id < 0) cerr << "Acception  error" << endl;
     else cout << "Sock created: " << this->id << endl;
+
 
     char * addr = inet_ntoa(this->addrStruct.sin_addr);
     string s(addr);
@@ -110,11 +113,38 @@ bool Connector :: recv_wr(){
 
 
 bool Connector :: is_alive(){
+    struct pollfd fd;
+    fd.fd = this->id;
+    fd.events = POLLIN;
+    cout << fd.events << endl;
+    switch(poll(&fd, 0, 1000)){
+        case EBADF:{ cerr << EBADF << endl; return false;}
+        case ENOMEM:{ cerr << ENOMEM << endl; return false;}
+        case EFAULT:{ cerr << EFAULT << endl; return false;}
+        case EINTR:{ cerr << EBADF << endl; return false;}
+        default: break;
+    }
+    cout << fd.revents << endl;
+    return fd.revents & POLLIN; // POLLHUP; //POLLRDNORM; //POLLMSG;
+    /*
+    fd_set rfds;
+    struct timeval tv;
+    int retval;
+    FD_ZERO(&rfds);
+    FD_SET(this->id, &rfds);
+    tv.tv_sec = 1;
+    tv.tv_usec = 0;
+    retval = select(this->id, &rfds, NULL, NULL, &tv);
+    cout << retval <<  FD_ISSET(this->id, &rfds) << endl;
+    return retval;
+    */
+    /*
     socklen_t error_code = 0;
     getsockopt(this->id, SOL_SOCKET, SO_ERROR, (socklen_t*)sizeof(error_code), &error_code);
     if(error_code == 0) cout << "Alive" << endl;
     else cout << "Dead" << endl;
     return error_code == 0;
+    */
 }
 
 

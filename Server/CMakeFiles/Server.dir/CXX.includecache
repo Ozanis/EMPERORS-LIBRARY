@@ -13,6 +13,8 @@ asyncServer.h
 /home/max/Projects/TelemetryAgent/Server/asyncServer.h
 thread
 -
+mutex
+-
 handler.h
 /home/max/Projects/TelemetryAgent/Server/handler.h
 
@@ -45,4 +47,6 @@ iostream
 -
 cstring
 -
+fcntl.h
+/home/max/Projects/TelemetryAgent/SocketWrapper/fcntl.h
 

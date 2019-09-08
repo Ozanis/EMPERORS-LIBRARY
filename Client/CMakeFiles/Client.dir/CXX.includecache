@@ -13,6 +13,8 @@
 /home/max/Projects/TelemetryAgent/util/proc.h
 ../util/memory.h
 /home/max/Projects/TelemetryAgent/util/memory.h
+signal.h
+/home/max/Projects/TelemetryAgent/Client/signal.h
 
 /home/max/Projects/TelemetryAgent/SocketWrapper/ClientWrap.h
 sys/types.h
