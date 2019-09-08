@@ -21,13 +21,16 @@ class Node : public Connector{
 
 void Node :: add(int id, uint16_t port){
     cout << "Adding node" << endl;
-    Node * temp = this->next;
-    while(temp != nullptr){
-        temp = temp->next;
-        cout << "Updatig" << endl;
-    }
-    temp = new Node(id, port);
+    if(prev == nullptr) next = new Node(id, port);
+    else{
+        Node * temp = this->next;
+        while(temp != nullptr){
+            temp = temp->next;
+            cout << "Updatig" << endl;
+            }
+         temp->next = new Node(id, port);
 //    delete(&temp);
+        }
 }
 
 

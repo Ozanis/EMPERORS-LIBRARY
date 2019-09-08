@@ -2,6 +2,7 @@
 #define ASYNC_H
 
 #include <thread>
+#include <mutex>
 #include "handler.h"
 
 
@@ -9,8 +10,8 @@ using std :: cout;
 using std :: endl;
 using std :: cerr;
 using std :: string;
-
-
+using std :: thread;
+using std :: mutex;
 
 
 class Server : public Handler, public  ServerSock{
@@ -25,9 +26,12 @@ class Server : public Handler, public  ServerSock{
 
 void Server :: recive(Node * connection){
     cout << "Start to recive" << endl;
-    if (connection->recv_wr()) display(connection);
+//    if(connection->is_alive()){
+      if (connection->recv_wr()) display(connection);
     else{
-        cerr << "Dead connection" << endl;
+        cerr << "Dead connection "
+//        << getpeername(connection->id , (struct sockaddr*)&connection->addrStruct, (socklen_t*)sizeof(connection->addrStruct))
+        << endl;
         --this->connectors;
         delete connection;
     }
@@ -39,7 +43,7 @@ void Server :: display(Node * connection){
     char * host = inet_ntoa(connection->addrStruct.sin_addr);
     string str(host), telemetry(connection->buffer);
     cout << "---> " << str << " : " << telemetry << endl;
-//    connection->buffer = {0};
+//    memset(&connection->buffer, 0, BUFF_SIZE);
 //    delete(telemetry);
 //    delete(str);
 //    delete(host);
@@ -66,23 +70,27 @@ class AsyncServer : public Server{
     public:
         explicit AsyncServer(const char * addr, uint16_t port) : Server(addr, port){};
         ~AsyncServer() = default;
+        void add_client();
         void asyncCast();
-        void asyncListen();
+//        void asyncListen();
 };
 
-
+/*
 void AsyncServer :: asyncListen(){
-    if (this->listen_wr()){
+    if (listen_wr()){
         cout << "Adding connection" << endl;
         add_connection(this->id);
     }
 }
+*/
+
+void AsyncServer :: add_client(){
+    add_connection(this->id);
+}
 
 
 void AsyncServer :: asyncCast(){
-    cout << "Cast" << endl;
-    cast();
-    asyncListen();
+    while(1) cast();
 }
 
 
