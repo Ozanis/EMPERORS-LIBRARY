@@ -1,0 +1,13 @@
+[ req ]
+prompt = no
+encrypt_key = no
+default_md = sha512
+distinguished_name = dname
+req_extensions = reqext
+
+[ dname ]
+CN = example.com
+emailAddress = admin@example.com
+
+[ reqext ]
+subjectAltName = DNS:example.com, DNS:*.example.com
