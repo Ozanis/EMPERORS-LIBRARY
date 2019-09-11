@@ -9,6 +9,13 @@ static const char * my_addr = "127.0.0.1";
 static const uint16_t my_port = 44301;
 
 
+void isRoot(){
+    if (getuid() !=0){
+        cerr << "You should have root preveledges" << endl;
+        exit(0);
+    }
+}
+
 void listen_cycle(AsyncServer * server){
     mutex mtx;
     while(1){
@@ -23,6 +30,7 @@ void listen_cycle(AsyncServer * server){
 
 
 int main(){
+    isRoot();
     auto Server = new AsyncServer(my_addr, my_port);
     thread handle_conns_async(listen_cycle, Server);
     handle_conns_async.detach();
