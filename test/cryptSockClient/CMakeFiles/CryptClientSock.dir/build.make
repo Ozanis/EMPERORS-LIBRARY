@@ -43,32 +43,32 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/max/Projects/TelemetryAgent/test/cryptSockClient
+CMAKE_SOURCE_DIR = /home/max/Projects/TelemetryAgent
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/max/Projects/TelemetryAgent/test/cryptSockClient
+CMAKE_BINARY_DIR = /home/max/Projects/TelemetryAgent
 
 # Include any dependencies generated for this target.
-include CMakeFiles/CryptClientSock.dir/depend.make
+include test/cryptSockClient/CMakeFiles/CryptClientSock.dir/depend.make
 
 # Include the progress variables for this target.
-include CMakeFiles/CryptClientSock.dir/progress.make
+include test/cryptSockClient/CMakeFiles/CryptClientSock.dir/progress.make
 
 # Include the compile flags for this target's objects.
-include CMakeFiles/CryptClientSock.dir/flags.make
+include test/cryptSockClient/CMakeFiles/CryptClientSock.dir/flags.make
 
-CMakeFiles/CryptClientSock.dir/cClient.cpp.o: CMakeFiles/CryptClientSock.dir/flags.make
-CMakeFiles/CryptClientSock.dir/cClient.cpp.o: cClient.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/max/Projects/TelemetryAgent/test/cryptSockClient/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/CryptClientSock.dir/cClient.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/CryptClientSock.dir/cClient.cpp.o -c /home/max/Projects/TelemetryAgent/test/cryptSockClient/cClient.cpp
+test/cryptSockClient/CMakeFiles/CryptClientSock.dir/cClient.cpp.o: test/cryptSockClient/CMakeFiles/CryptClientSock.dir/flags.make
+test/cryptSockClient/CMakeFiles/CryptClientSock.dir/cClient.cpp.o: test/cryptSockClient/cClient.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/max/Projects/TelemetryAgent/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object test/cryptSockClient/CMakeFiles/CryptClientSock.dir/cClient.cpp.o"
+	cd /home/max/Projects/TelemetryAgent/test/cryptSockClient && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/CryptClientSock.dir/cClient.cpp.o -c /home/max/Projects/TelemetryAgent/test/cryptSockClient/cClient.cpp
 
-CMakeFiles/CryptClientSock.dir/cClient.cpp.i: cmake_force
+test/cryptSockClient/CMakeFiles/CryptClientSock.dir/cClient.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/CryptClientSock.dir/cClient.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/max/Projects/TelemetryAgent/test/cryptSockClient/cClient.cpp > CMakeFiles/CryptClientSock.dir/cClient.cpp.i
+	cd /home/max/Projects/TelemetryAgent/test/cryptSockClient && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/max/Projects/TelemetryAgent/test/cryptSockClient/cClient.cpp > CMakeFiles/CryptClientSock.dir/cClient.cpp.i
 
-CMakeFiles/CryptClientSock.dir/cClient.cpp.s: cmake_force
+test/cryptSockClient/CMakeFiles/CryptClientSock.dir/cClient.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/CryptClientSock.dir/cClient.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/max/Projects/TelemetryAgent/test/cryptSockClient/cClient.cpp -o CMakeFiles/CryptClientSock.dir/cClient.cpp.s
+	cd /home/max/Projects/TelemetryAgent/test/cryptSockClient && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/max/Projects/TelemetryAgent/test/cryptSockClient/cClient.cpp -o CMakeFiles/CryptClientSock.dir/cClient.cpp.s
 
 # Object files for target CryptClientSock
 CryptClientSock_OBJECTS = \
@@ -77,24 +77,24 @@ CryptClientSock_OBJECTS = \
 # External object files for target CryptClientSock
 CryptClientSock_EXTERNAL_OBJECTS =
 
-CryptClientSock: CMakeFiles/CryptClientSock.dir/cClient.cpp.o
-CryptClientSock: CMakeFiles/CryptClientSock.dir/build.make
-CryptClientSock: /usr/lib/libcrypto.so
-CryptClientSock: /usr/lib/libssl.so
-CryptClientSock: CMakeFiles/CryptClientSock.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/max/Projects/TelemetryAgent/test/cryptSockClient/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable CryptClientSock"
-	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/CryptClientSock.dir/link.txt --verbose=$(VERBOSE)
+test/cryptSockClient/CryptClientSock: test/cryptSockClient/CMakeFiles/CryptClientSock.dir/cClient.cpp.o
+test/cryptSockClient/CryptClientSock: test/cryptSockClient/CMakeFiles/CryptClientSock.dir/build.make
+test/cryptSockClient/CryptClientSock: /usr/lib/libcrypto.so
+test/cryptSockClient/CryptClientSock: /usr/lib/libssl.so
+test/cryptSockClient/CryptClientSock: test/cryptSockClient/CMakeFiles/CryptClientSock.dir/link.txt
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/max/Projects/TelemetryAgent/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable CryptClientSock"
+	cd /home/max/Projects/TelemetryAgent/test/cryptSockClient && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/CryptClientSock.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
-CMakeFiles/CryptClientSock.dir/build: CryptClientSock
+test/cryptSockClient/CMakeFiles/CryptClientSock.dir/build: test/cryptSockClient/CryptClientSock
 
-.PHONY : CMakeFiles/CryptClientSock.dir/build
+.PHONY : test/cryptSockClient/CMakeFiles/CryptClientSock.dir/build
 
-CMakeFiles/CryptClientSock.dir/clean:
-	$(CMAKE_COMMAND) -P CMakeFiles/CryptClientSock.dir/cmake_clean.cmake
-.PHONY : CMakeFiles/CryptClientSock.dir/clean
+test/cryptSockClient/CMakeFiles/CryptClientSock.dir/clean:
+	cd /home/max/Projects/TelemetryAgent/test/cryptSockClient && $(CMAKE_COMMAND) -P CMakeFiles/CryptClientSock.dir/cmake_clean.cmake
+.PHONY : test/cryptSockClient/CMakeFiles/CryptClientSock.dir/clean
 
-CMakeFiles/CryptClientSock.dir/depend:
-	cd /home/max/Projects/TelemetryAgent/test/cryptSockClient && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/max/Projects/TelemetryAgent/test/cryptSockClient /home/max/Projects/TelemetryAgent/test/cryptSockClient /home/max/Projects/TelemetryAgent/test/cryptSockClient /home/max/Projects/TelemetryAgent/test/cryptSockClient /home/max/Projects/TelemetryAgent/test/cryptSockClient/CMakeFiles/CryptClientSock.dir/DependInfo.cmake --color=$(COLOR)
-.PHONY : CMakeFiles/CryptClientSock.dir/depend
+test/cryptSockClient/CMakeFiles/CryptClientSock.dir/depend:
+	cd /home/max/Projects/TelemetryAgent && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/max/Projects/TelemetryAgent /home/max/Projects/TelemetryAgent/test/cryptSockClient /home/max/Projects/TelemetryAgent /home/max/Projects/TelemetryAgent/test/cryptSockClient /home/max/Projects/TelemetryAgent/test/cryptSockClient/CMakeFiles/CryptClientSock.dir/DependInfo.cmake --color=$(COLOR)
+.PHONY : test/cryptSockClient/CMakeFiles/CryptClientSock.dir/depend
 

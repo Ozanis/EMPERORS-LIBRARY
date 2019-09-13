@@ -13,6 +13,8 @@ set(CMAKE_MAKEFILE_DEPENDS
   "CMakeLists.txt"
   "Client/CMakeLists.txt"
   "Server/CMakeLists.txt"
+  "test/cryptSockClient/CMakeLists.txt"
+  "test/cryptSockServer/CMakeLists.txt"
   "test/flatServer/CMakeLists.txt"
   "test/simpleClient/CMakeLists.txt"
   "/usr/share/cmake-3.15/Modules/CMakeCInformation.cmake"
@@ -25,16 +27,16 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/usr/share/cmake-3.15/Modules/CMakeSystemSpecificInformation.cmake"
   "/usr/share/cmake-3.15/Modules/CMakeSystemSpecificInitialize.cmake"
   "/usr/share/cmake-3.15/Modules/CheckCSourceCompiles.cmake"
-  "/usr/share/cmake-3.15/Modules/CheckFunctionExists.c"
-  "/usr/share/cmake-3.15/Modules/CheckIncludeFile.c.in"
   "/usr/share/cmake-3.15/Modules/CheckIncludeFile.cmake"
   "/usr/share/cmake-3.15/Modules/CheckLibraryExists.cmake"
   "/usr/share/cmake-3.15/Modules/Compiler/CMakeCommonCompilerMacros.cmake"
   "/usr/share/cmake-3.15/Modules/Compiler/GNU-C.cmake"
   "/usr/share/cmake-3.15/Modules/Compiler/GNU-CXX.cmake"
   "/usr/share/cmake-3.15/Modules/Compiler/GNU.cmake"
+  "/usr/share/cmake-3.15/Modules/FindOpenSSL.cmake"
   "/usr/share/cmake-3.15/Modules/FindPackageHandleStandardArgs.cmake"
   "/usr/share/cmake-3.15/Modules/FindPackageMessage.cmake"
+  "/usr/share/cmake-3.15/Modules/FindPkgConfig.cmake"
   "/usr/share/cmake-3.15/Modules/FindThreads.cmake"
   "/usr/share/cmake-3.15/Modules/Internal/CMakeCheckCompilerFlag.cmake"
   "/usr/share/cmake-3.15/Modules/Platform/Linux-GNU-C.cmake"
@@ -57,6 +59,8 @@ set(CMAKE_MAKEFILE_PRODUCTS
   "Client/CMakeFiles/CMakeDirectoryInformation.cmake"
   "test/flatServer/CMakeFiles/CMakeDirectoryInformation.cmake"
   "test/simpleClient/CMakeFiles/CMakeDirectoryInformation.cmake"
+  "test/cryptSockServer/CMakeFiles/CMakeDirectoryInformation.cmake"
+  "test/cryptSockClient/CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
 # Dependency information for all targets:
@@ -65,4 +69,6 @@ set(CMAKE_DEPEND_INFO_FILES
   "Client/CMakeFiles/Client.dir/DependInfo.cmake"
   "test/flatServer/CMakeFiles/Flat.dir/DependInfo.cmake"
   "test/simpleClient/CMakeFiles/Simple.dir/DependInfo.cmake"
+  "test/cryptSockServer/CMakeFiles/CryptSock.dir/DependInfo.cmake"
+  "test/cryptSockClient/CMakeFiles/CryptClientSock.dir/DependInfo.cmake"
   )

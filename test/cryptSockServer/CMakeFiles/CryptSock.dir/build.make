@@ -43,32 +43,32 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/max/Projects/TelemetryAgent/test/cryptSockServer
+CMAKE_SOURCE_DIR = /home/max/Projects/TelemetryAgent
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/max/Projects/TelemetryAgent/test/cryptSockServer
+CMAKE_BINARY_DIR = /home/max/Projects/TelemetryAgent
 
 # Include any dependencies generated for this target.
-include CMakeFiles/CryptSock.dir/depend.make
+include test/cryptSockServer/CMakeFiles/CryptSock.dir/depend.make
 
 # Include the progress variables for this target.
-include CMakeFiles/CryptSock.dir/progress.make
+include test/cryptSockServer/CMakeFiles/CryptSock.dir/progress.make
 
 # Include the compile flags for this target's objects.
-include CMakeFiles/CryptSock.dir/flags.make
+include test/cryptSockServer/CMakeFiles/CryptSock.dir/flags.make
 
-CMakeFiles/CryptSock.dir/cServer.cpp.o: CMakeFiles/CryptSock.dir/flags.make
-CMakeFiles/CryptSock.dir/cServer.cpp.o: cServer.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/max/Projects/TelemetryAgent/test/cryptSockServer/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/CryptSock.dir/cServer.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/CryptSock.dir/cServer.cpp.o -c /home/max/Projects/TelemetryAgent/test/cryptSockServer/cServer.cpp
+test/cryptSockServer/CMakeFiles/CryptSock.dir/cServer.cpp.o: test/cryptSockServer/CMakeFiles/CryptSock.dir/flags.make
+test/cryptSockServer/CMakeFiles/CryptSock.dir/cServer.cpp.o: test/cryptSockServer/cServer.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/max/Projects/TelemetryAgent/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object test/cryptSockServer/CMakeFiles/CryptSock.dir/cServer.cpp.o"
+	cd /home/max/Projects/TelemetryAgent/test/cryptSockServer && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/CryptSock.dir/cServer.cpp.o -c /home/max/Projects/TelemetryAgent/test/cryptSockServer/cServer.cpp
 
-CMakeFiles/CryptSock.dir/cServer.cpp.i: cmake_force
+test/cryptSockServer/CMakeFiles/CryptSock.dir/cServer.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/CryptSock.dir/cServer.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/max/Projects/TelemetryAgent/test/cryptSockServer/cServer.cpp > CMakeFiles/CryptSock.dir/cServer.cpp.i
+	cd /home/max/Projects/TelemetryAgent/test/cryptSockServer && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/max/Projects/TelemetryAgent/test/cryptSockServer/cServer.cpp > CMakeFiles/CryptSock.dir/cServer.cpp.i
 
-CMakeFiles/CryptSock.dir/cServer.cpp.s: cmake_force
+test/cryptSockServer/CMakeFiles/CryptSock.dir/cServer.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/CryptSock.dir/cServer.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/max/Projects/TelemetryAgent/test/cryptSockServer/cServer.cpp -o CMakeFiles/CryptSock.dir/cServer.cpp.s
+	cd /home/max/Projects/TelemetryAgent/test/cryptSockServer && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/max/Projects/TelemetryAgent/test/cryptSockServer/cServer.cpp -o CMakeFiles/CryptSock.dir/cServer.cpp.s
 
 # Object files for target CryptSock
 CryptSock_OBJECTS = \
@@ -77,24 +77,24 @@ CryptSock_OBJECTS = \
 # External object files for target CryptSock
 CryptSock_EXTERNAL_OBJECTS =
 
-CryptSock: CMakeFiles/CryptSock.dir/cServer.cpp.o
-CryptSock: CMakeFiles/CryptSock.dir/build.make
-CryptSock: /usr/lib/libcrypto.so
-CryptSock: /usr/lib/libssl.so
-CryptSock: CMakeFiles/CryptSock.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/max/Projects/TelemetryAgent/test/cryptSockServer/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable CryptSock"
-	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/CryptSock.dir/link.txt --verbose=$(VERBOSE)
+test/cryptSockServer/CryptSock: test/cryptSockServer/CMakeFiles/CryptSock.dir/cServer.cpp.o
+test/cryptSockServer/CryptSock: test/cryptSockServer/CMakeFiles/CryptSock.dir/build.make
+test/cryptSockServer/CryptSock: /usr/lib/libcrypto.so
+test/cryptSockServer/CryptSock: /usr/lib/libssl.so
+test/cryptSockServer/CryptSock: test/cryptSockServer/CMakeFiles/CryptSock.dir/link.txt
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/max/Projects/TelemetryAgent/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable CryptSock"
+	cd /home/max/Projects/TelemetryAgent/test/cryptSockServer && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/CryptSock.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
-CMakeFiles/CryptSock.dir/build: CryptSock
+test/cryptSockServer/CMakeFiles/CryptSock.dir/build: test/cryptSockServer/CryptSock
 
-.PHONY : CMakeFiles/CryptSock.dir/build
+.PHONY : test/cryptSockServer/CMakeFiles/CryptSock.dir/build
 
-CMakeFiles/CryptSock.dir/clean:
-	$(CMAKE_COMMAND) -P CMakeFiles/CryptSock.dir/cmake_clean.cmake
-.PHONY : CMakeFiles/CryptSock.dir/clean
+test/cryptSockServer/CMakeFiles/CryptSock.dir/clean:
+	cd /home/max/Projects/TelemetryAgent/test/cryptSockServer && $(CMAKE_COMMAND) -P CMakeFiles/CryptSock.dir/cmake_clean.cmake
+.PHONY : test/cryptSockServer/CMakeFiles/CryptSock.dir/clean
 
-CMakeFiles/CryptSock.dir/depend:
-	cd /home/max/Projects/TelemetryAgent/test/cryptSockServer && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/max/Projects/TelemetryAgent/test/cryptSockServer /home/max/Projects/TelemetryAgent/test/cryptSockServer /home/max/Projects/TelemetryAgent/test/cryptSockServer /home/max/Projects/TelemetryAgent/test/cryptSockServer /home/max/Projects/TelemetryAgent/test/cryptSockServer/CMakeFiles/CryptSock.dir/DependInfo.cmake --color=$(COLOR)
-.PHONY : CMakeFiles/CryptSock.dir/depend
+test/cryptSockServer/CMakeFiles/CryptSock.dir/depend:
+	cd /home/max/Projects/TelemetryAgent && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/max/Projects/TelemetryAgent /home/max/Projects/TelemetryAgent/test/cryptSockServer /home/max/Projects/TelemetryAgent /home/max/Projects/TelemetryAgent/test/cryptSockServer /home/max/Projects/TelemetryAgent/test/cryptSockServer/CMakeFiles/CryptSock.dir/DependInfo.cmake --color=$(COLOR)
+.PHONY : test/cryptSockServer/CMakeFiles/CryptSock.dir/depend
 
