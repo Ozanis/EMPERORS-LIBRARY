@@ -12,12 +12,12 @@ Multithreaded Client-server service for collecting telemetry over TLS. Meaning C
 
 * OpenSSL
 
-<h2>Content</h2>
+Script provides:
 
-1 Client-side
-2 Server-side
-3 Bash-script for solving dependencies
-4 Bash daemon set-up
+1. Client-side
+2. Server-side
+3. Bash-script for solving dependencies
+4. Bash daemon set-up
 
 <h2>Explanations</h2>
 
