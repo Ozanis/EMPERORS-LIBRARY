@@ -26,7 +26,7 @@ You need to run  TelemetryAgent/Sservice/config.sh and enter "client" or "server
 
 <h2>Demo</h2>
                                
-<img src="./test/demo.jpg"
+<img src="./test/demo.png"
 alt="Running"
 style="float: left; margin-right: 10px;" />    
                                                                                                    
