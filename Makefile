@@ -162,6 +162,32 @@ Simple/fast:
 	$(MAKE) -f test/simpleClient/CMakeFiles/Simple.dir/build.make test/simpleClient/CMakeFiles/Simple.dir/build
 .PHONY : Simple/fast
 
+#=============================================================================
+# Target rules for targets named CryptSock
+
+# Build rule for target.
+CryptSock: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 CryptSock
+.PHONY : CryptSock
+
+# fast build rule for target.
+CryptSock/fast:
+	$(MAKE) -f test/cryptSockServer/CMakeFiles/CryptSock.dir/build.make test/cryptSockServer/CMakeFiles/CryptSock.dir/build
+.PHONY : CryptSock/fast
+
+#=============================================================================
+# Target rules for targets named CryptClientSock
+
+# Build rule for target.
+CryptClientSock: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 CryptClientSock
+.PHONY : CryptClientSock
+
+# fast build rule for target.
+CryptClientSock/fast:
+	$(MAKE) -f test/cryptSockClient/CMakeFiles/CryptClientSock.dir/build.make test/cryptSockClient/CMakeFiles/CryptClientSock.dir/build
+.PHONY : CryptClientSock/fast
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -174,6 +200,8 @@ help:
 	@echo "... Client"
 	@echo "... Flat"
 	@echo "... Simple"
+	@echo "... CryptSock"
+	@echo "... CryptClientSock"
 .PHONY : help
 
 

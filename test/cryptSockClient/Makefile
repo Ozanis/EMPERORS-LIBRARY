@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/max/Projects/TelemetryAgent/test/cryptSockClient
+CMAKE_SOURCE_DIR = /home/max/Projects/TelemetryAgent
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/max/Projects/TelemetryAgent/test/cryptSockClient
+CMAKE_BINARY_DIR = /home/max/Projects/TelemetryAgent
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,14 +80,14 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/max/Projects/TelemetryAgent/test/cryptSockClient/CMakeFiles /home/max/Projects/TelemetryAgent/test/cryptSockClient/CMakeFiles/progress.marks
-	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/max/Projects/TelemetryAgent/test/cryptSockClient/CMakeFiles 0
+	cd /home/max/Projects/TelemetryAgent && $(CMAKE_COMMAND) -E cmake_progress_start /home/max/Projects/TelemetryAgent/CMakeFiles /home/max/Projects/TelemetryAgent/test/cryptSockClient/CMakeFiles/progress.marks
+	cd /home/max/Projects/TelemetryAgent && $(MAKE) -f CMakeFiles/Makefile2 test/cryptSockClient/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/max/Projects/TelemetryAgent/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	$(MAKE) -f CMakeFiles/Makefile2 clean
+	cd /home/max/Projects/TelemetryAgent && $(MAKE) -f CMakeFiles/Makefile2 test/cryptSockClient/clean
 .PHONY : clean
 
 # The main clean target
@@ -97,30 +97,32 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	$(MAKE) -f CMakeFiles/Makefile2 preinstall
+	cd /home/max/Projects/TelemetryAgent && $(MAKE) -f CMakeFiles/Makefile2 test/cryptSockClient/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	$(MAKE) -f CMakeFiles/Makefile2 preinstall
+	cd /home/max/Projects/TelemetryAgent && $(MAKE) -f CMakeFiles/Makefile2 test/cryptSockClient/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/max/Projects/TelemetryAgent && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
-#=============================================================================
-# Target rules for targets named CryptClientSock
+# Convenience name for target.
+test/cryptSockClient/CMakeFiles/CryptClientSock.dir/rule:
+	cd /home/max/Projects/TelemetryAgent && $(MAKE) -f CMakeFiles/Makefile2 test/cryptSockClient/CMakeFiles/CryptClientSock.dir/rule
+.PHONY : test/cryptSockClient/CMakeFiles/CryptClientSock.dir/rule
 
-# Build rule for target.
-CryptClientSock: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 CryptClientSock
+# Convenience name for target.
+CryptClientSock: test/cryptSockClient/CMakeFiles/CryptClientSock.dir/rule
+
 .PHONY : CryptClientSock
 
 # fast build rule for target.
 CryptClientSock/fast:
-	$(MAKE) -f CMakeFiles/CryptClientSock.dir/build.make CMakeFiles/CryptClientSock.dir/build
+	cd /home/max/Projects/TelemetryAgent && $(MAKE) -f test/cryptSockClient/CMakeFiles/CryptClientSock.dir/build.make test/cryptSockClient/CMakeFiles/CryptClientSock.dir/build
 .PHONY : CryptClientSock/fast
 
 cClient.o: cClient.cpp.o
@@ -129,7 +131,7 @@ cClient.o: cClient.cpp.o
 
 # target to build an object file
 cClient.cpp.o:
-	$(MAKE) -f CMakeFiles/CryptClientSock.dir/build.make CMakeFiles/CryptClientSock.dir/cClient.cpp.o
+	cd /home/max/Projects/TelemetryAgent && $(MAKE) -f test/cryptSockClient/CMakeFiles/CryptClientSock.dir/build.make test/cryptSockClient/CMakeFiles/CryptClientSock.dir/cClient.cpp.o
 .PHONY : cClient.cpp.o
 
 cClient.i: cClient.cpp.i
@@ -138,7 +140,7 @@ cClient.i: cClient.cpp.i
 
 # target to preprocess a source file
 cClient.cpp.i:
-	$(MAKE) -f CMakeFiles/CryptClientSock.dir/build.make CMakeFiles/CryptClientSock.dir/cClient.cpp.i
+	cd /home/max/Projects/TelemetryAgent && $(MAKE) -f test/cryptSockClient/CMakeFiles/CryptClientSock.dir/build.make test/cryptSockClient/CMakeFiles/CryptClientSock.dir/cClient.cpp.i
 .PHONY : cClient.cpp.i
 
 cClient.s: cClient.cpp.s
@@ -147,7 +149,7 @@ cClient.s: cClient.cpp.s
 
 # target to generate assembly for a file
 cClient.cpp.s:
-	$(MAKE) -f CMakeFiles/CryptClientSock.dir/build.make CMakeFiles/CryptClientSock.dir/cClient.cpp.s
+	cd /home/max/Projects/TelemetryAgent && $(MAKE) -f test/cryptSockClient/CMakeFiles/CryptClientSock.dir/build.make test/cryptSockClient/CMakeFiles/CryptClientSock.dir/cClient.cpp.s
 .PHONY : cClient.cpp.s
 
 # Help Target
@@ -173,6 +175,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/max/Projects/TelemetryAgent && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

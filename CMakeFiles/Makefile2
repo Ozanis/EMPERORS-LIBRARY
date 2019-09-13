@@ -57,6 +57,8 @@ all: Server/all
 all: Client/all
 all: test/flatServer/all
 all: test/simpleClient/all
+all: test/cryptSockServer/all
+all: test/cryptSockClient/all
 
 .PHONY : all
 
@@ -65,6 +67,8 @@ clean: Server/clean
 clean: Client/clean
 clean: test/flatServer/clean
 clean: test/simpleClient/clean
+clean: test/cryptSockServer/clean
+clean: test/cryptSockClient/clean
 
 .PHONY : clean
 
@@ -73,6 +77,8 @@ preinstall: Server/preinstall
 preinstall: Client/preinstall
 preinstall: test/flatServer/preinstall
 preinstall: test/simpleClient/preinstall
+preinstall: test/cryptSockServer/preinstall
+preinstall: test/cryptSockClient/preinstall
 
 .PHONY : preinstall
 
@@ -101,7 +107,7 @@ Server/preinstall:
 Server/CMakeFiles/Server.dir/all:
 	$(MAKE) -f Server/CMakeFiles/Server.dir/build.make Server/CMakeFiles/Server.dir/depend
 	$(MAKE) -f Server/CMakeFiles/Server.dir/build.make Server/CMakeFiles/Server.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/max/Projects/TelemetryAgent/CMakeFiles --progress-num=5,6 "Built target Server"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/max/Projects/TelemetryAgent/CMakeFiles --progress-num=9,10 "Built target Server"
 .PHONY : Server/CMakeFiles/Server.dir/all
 
 # Build rule for subdir invocation for target.
@@ -191,7 +197,7 @@ test/flatServer/preinstall:
 test/flatServer/CMakeFiles/Flat.dir/all:
 	$(MAKE) -f test/flatServer/CMakeFiles/Flat.dir/build.make test/flatServer/CMakeFiles/Flat.dir/depend
 	$(MAKE) -f test/flatServer/CMakeFiles/Flat.dir/build.make test/flatServer/CMakeFiles/Flat.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/max/Projects/TelemetryAgent/CMakeFiles --progress-num=3,4 "Built target Flat"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/max/Projects/TelemetryAgent/CMakeFiles --progress-num=7,8 "Built target Flat"
 .PHONY : test/flatServer/CMakeFiles/Flat.dir/all
 
 # Build rule for subdir invocation for target.
@@ -236,7 +242,7 @@ test/simpleClient/preinstall:
 test/simpleClient/CMakeFiles/Simple.dir/all:
 	$(MAKE) -f test/simpleClient/CMakeFiles/Simple.dir/build.make test/simpleClient/CMakeFiles/Simple.dir/depend
 	$(MAKE) -f test/simpleClient/CMakeFiles/Simple.dir/build.make test/simpleClient/CMakeFiles/Simple.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/max/Projects/TelemetryAgent/CMakeFiles --progress-num=7,8 "Built target Simple"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/max/Projects/TelemetryAgent/CMakeFiles --progress-num=11,12 "Built target Simple"
 .PHONY : test/simpleClient/CMakeFiles/Simple.dir/all
 
 # Build rule for subdir invocation for target.
@@ -255,6 +261,96 @@ Simple: test/simpleClient/CMakeFiles/Simple.dir/rule
 test/simpleClient/CMakeFiles/Simple.dir/clean:
 	$(MAKE) -f test/simpleClient/CMakeFiles/Simple.dir/build.make test/simpleClient/CMakeFiles/Simple.dir/clean
 .PHONY : test/simpleClient/CMakeFiles/Simple.dir/clean
+
+#=============================================================================
+# Directory level rules for directory test/cryptSockServer
+
+# Recursive "all" directory target.
+test/cryptSockServer/all: test/cryptSockServer/CMakeFiles/CryptSock.dir/all
+
+.PHONY : test/cryptSockServer/all
+
+# Recursive "clean" directory target.
+test/cryptSockServer/clean: test/cryptSockServer/CMakeFiles/CryptSock.dir/clean
+
+.PHONY : test/cryptSockServer/clean
+
+# Recursive "preinstall" directory target.
+test/cryptSockServer/preinstall:
+
+.PHONY : test/cryptSockServer/preinstall
+
+#=============================================================================
+# Target rules for target test/cryptSockServer/CMakeFiles/CryptSock.dir
+
+# All Build rule for target.
+test/cryptSockServer/CMakeFiles/CryptSock.dir/all:
+	$(MAKE) -f test/cryptSockServer/CMakeFiles/CryptSock.dir/build.make test/cryptSockServer/CMakeFiles/CryptSock.dir/depend
+	$(MAKE) -f test/cryptSockServer/CMakeFiles/CryptSock.dir/build.make test/cryptSockServer/CMakeFiles/CryptSock.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/max/Projects/TelemetryAgent/CMakeFiles --progress-num=5,6 "Built target CryptSock"
+.PHONY : test/cryptSockServer/CMakeFiles/CryptSock.dir/all
+
+# Build rule for subdir invocation for target.
+test/cryptSockServer/CMakeFiles/CryptSock.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/max/Projects/TelemetryAgent/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 test/cryptSockServer/CMakeFiles/CryptSock.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/max/Projects/TelemetryAgent/CMakeFiles 0
+.PHONY : test/cryptSockServer/CMakeFiles/CryptSock.dir/rule
+
+# Convenience name for target.
+CryptSock: test/cryptSockServer/CMakeFiles/CryptSock.dir/rule
+
+.PHONY : CryptSock
+
+# clean rule for target.
+test/cryptSockServer/CMakeFiles/CryptSock.dir/clean:
+	$(MAKE) -f test/cryptSockServer/CMakeFiles/CryptSock.dir/build.make test/cryptSockServer/CMakeFiles/CryptSock.dir/clean
+.PHONY : test/cryptSockServer/CMakeFiles/CryptSock.dir/clean
+
+#=============================================================================
+# Directory level rules for directory test/cryptSockClient
+
+# Recursive "all" directory target.
+test/cryptSockClient/all: test/cryptSockClient/CMakeFiles/CryptClientSock.dir/all
+
+.PHONY : test/cryptSockClient/all
+
+# Recursive "clean" directory target.
+test/cryptSockClient/clean: test/cryptSockClient/CMakeFiles/CryptClientSock.dir/clean
+
+.PHONY : test/cryptSockClient/clean
+
+# Recursive "preinstall" directory target.
+test/cryptSockClient/preinstall:
+
+.PHONY : test/cryptSockClient/preinstall
+
+#=============================================================================
+# Target rules for target test/cryptSockClient/CMakeFiles/CryptClientSock.dir
+
+# All Build rule for target.
+test/cryptSockClient/CMakeFiles/CryptClientSock.dir/all:
+	$(MAKE) -f test/cryptSockClient/CMakeFiles/CryptClientSock.dir/build.make test/cryptSockClient/CMakeFiles/CryptClientSock.dir/depend
+	$(MAKE) -f test/cryptSockClient/CMakeFiles/CryptClientSock.dir/build.make test/cryptSockClient/CMakeFiles/CryptClientSock.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/max/Projects/TelemetryAgent/CMakeFiles --progress-num=3,4 "Built target CryptClientSock"
+.PHONY : test/cryptSockClient/CMakeFiles/CryptClientSock.dir/all
+
+# Build rule for subdir invocation for target.
+test/cryptSockClient/CMakeFiles/CryptClientSock.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/max/Projects/TelemetryAgent/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 test/cryptSockClient/CMakeFiles/CryptClientSock.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/max/Projects/TelemetryAgent/CMakeFiles 0
+.PHONY : test/cryptSockClient/CMakeFiles/CryptClientSock.dir/rule
+
+# Convenience name for target.
+CryptClientSock: test/cryptSockClient/CMakeFiles/CryptClientSock.dir/rule
+
+.PHONY : CryptClientSock
+
+# clean rule for target.
+test/cryptSockClient/CMakeFiles/CryptClientSock.dir/clean:
+	$(MAKE) -f test/cryptSockClient/CMakeFiles/CryptClientSock.dir/build.make test/cryptSockClient/CMakeFiles/CryptClientSock.dir/clean
+.PHONY : test/cryptSockClient/CMakeFiles/CryptClientSock.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

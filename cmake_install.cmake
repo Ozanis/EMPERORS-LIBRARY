@@ -43,6 +43,8 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   include("/home/max/Projects/TelemetryAgent/Client/cmake_install.cmake")
   include("/home/max/Projects/TelemetryAgent/test/flatServer/cmake_install.cmake")
   include("/home/max/Projects/TelemetryAgent/test/simpleClient/cmake_install.cmake")
+  include("/home/max/Projects/TelemetryAgent/test/cryptSockServer/cmake_install.cmake")
+  include("/home/max/Projects/TelemetryAgent/test/cryptSockClient/cmake_install.cmake")
 
 endif()
 
