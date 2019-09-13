@@ -6,7 +6,7 @@ Multithreaded Client-server service for collecting telemetry over TLS. Meaning C
 
 <h2>Related works</h2>
 
-* [Python version](https://github.com/Ozanis/sslsock_client_server)
+* [Python version](https://github.com/Ozanis/TelemetryPyAgent)
 
 <h2>Requirements</h2>
 
