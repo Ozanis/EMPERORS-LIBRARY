@@ -87,43 +87,14 @@ EOF
 
 gen_ciphers(){
     cd "$(pwd)/cryptkeys"
-    openssl ecparam -name c2tnb191v3 -out X9_62.pem
-    openssl ecparam -in X9_62.pem -genkey -noout -out X9_62-key.pem
-    openssl ecparam -in X9_62.pem -text -param_enc explicit -noout
-
-    openssl req -x509 -new -SHA384 -nodes -key X9_62-key.pem 3650 -out X9_62-cert.pem
-    openssl x509 -req -SHA384 -extfile v3.ext -days 365 -in X9_62-cert.pem -CA ca.crt -CAkey X9_62-key.pem -CAcreateserial -out X9_62-cert.pem
-    openssl req -in X9_62-cert.pem -noout -text
-
-    openssl ec -in X9_62-key.pem -pubout -out X9_62-pub.pem
-
-#openssl genpkey -algorithm ed25519 -out ed25519-priv-key.pem
-#openssl pkey -in ed25519key.pem -pubout
-#    read -p "Few details are necessary for certificate creating. Please enter CN: " CN
-#    read -p "Also I need cert owner email: " email
-#    read -p "And last enter your email (example@service.com): " email
-#    cat >> "${exec_path}/cryptkeys/openssl.cnf"<< EOF
-#[ req ]
-#prompt = no
-#encrypt_key = no
-#default_md = sha512
-#distinguished_name = dname
-#req_extensions = reqext
-
-#[ dname ]
-#CN = ${CN}
-#emailAddress = ${email}
-#
-#[ reqext ]
-#subjectAltName = ${altname}
-#EOF
-#    openssl req -new -config openssl.cnf -key privkey.pem -out csr.pem 
-#    openssl req -in csr.pem -noout -text -verify
+    openssl ecparam -out ecparam.pem -name prime256v1
+    openssl genpkey -paramfile ecparam.pem -out ecdhkey.pem
+    openssl req -x509 -new -key ecdhkey.pem -out cert.pem
 }
 
 
-check_dependencies()
-setup_service()
-gen_ciphers()
+check_dependencies
+setup_service
+gen_ciphers
 
 exit 0;

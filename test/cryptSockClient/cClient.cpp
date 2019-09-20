@@ -1,22 +1,5 @@
-#include <stdio.h>
-#include <unistd.h>
-#include <string.h>
-#include <sys/socket.h>
-#include <arpa/inet.h>
-#include <openssl/evp.h>
-#include <openssl/ssl.h>
-#include <openssl/err.h>
-#include <openssl/bio.h>
-#include <openssl/ecdsa.h>
-#include <openssl/ecdh.h>
-#include <openssl/crypto.h>
-#include <openssl/pem.h>
-#include "CryptClientSock.h" 
-#include <openssl/conf.h>
-
-
-const char * pub_key = "/home/max/Projects/TelemetryAgent/cryptkeys/X9_62-pub.pem";
-const char * pub_cert = "/home/max/Projects/TelemetryAgent/cryptkeys/X9_62-pcert.pem";
+const char * pub_key = "/home/max/Projects/TelemetryAgent/cryptkeys/dhkey.pem";
+const char * pub_cert = "/home/max/Projects/TelemetryAgent/cryptkeys/cert.pem";
 
 
 #include <stdio.h>
@@ -31,7 +14,12 @@ const char * pub_cert = "/home/max/Projects/TelemetryAgent/cryptkeys/X9_62-pcert
 #include <openssl/err.h>
  
 #define FAIL    -1
- 
+
+void init_openssl_library(){
+    SSL_library_init();
+    SSL_load_error_strings();
+    }
+
 int OpenConnection(const char *hostname, int port){
     struct hostent *host;
     struct sockaddr_in addr;
@@ -58,10 +46,8 @@ int OpenConnection(const char *hostname, int port){
 
 
 SSL_CTX* InitCTX(void){
-    auto * method = TLSv1_2_client_method();  /* Create new client-method instance */
-
+    auto * method = SSLv23_method();  /* Create new client-method instance */
     SSL_CTX *ctx;
- 
     OpenSSL_add_all_algorithms();  /* Load cryptos, et.al. */
     SSL_load_error_strings();   /* Bring in and register error messages */
     ctx = SSL_CTX_new(method);   /* Create new context */
@@ -70,15 +56,6 @@ SSL_CTX* InitCTX(void){
         ERR_print_errors_fp(stderr);
         abort();
     }
-//    SSL_CTX_set_ecdh_auto(ctx, 1);
-/*  if(SSL_CTX_use_certificate_file(ctx, pub_cert, SSL_FILETYPE_PEM) <= 0){
-        ERR_print_errors_fp(stderr);
-        exit(EXIT_FAILURE);
-    }
-    if(SSL_CTX_USE_PublicKey_file(ctx, pub_key, SSL_FILETYPE_PEM) <= 0>) {
-        ERR_print_errors_fp(stderr);
-        exit(EXIT_FAILURE);
-    }*/
     return ctx;
 }
  
@@ -103,6 +80,22 @@ void ShowCerts(SSL* ssl){
         printf("Info: No client certificates configured.\n");
 }
  
+
+void verify_callback(X509_STORE_CTX* x509_ctx, SSL_CTX * ctx){
+    int depth = X509_STORE_CTX_get_error_depth(x509_ctx);
+    int err = X509_STORE_CTX_get_error(x509_ctx);
+    X509 * cert = X509_STORE_CTX_get_current_cert(x509_ctx);
+    X509_NAME* iname = cert ? X509_get_issuer_name(cert) : NULL;
+    X509_NAME* sname = cert ? X509_get_subject_name(cert) : NULL;
+//    print_cn_name("Issuer (cn)", iname);
+//    print_cn_name("Subject (cn)", sname);
+    if(depth == 0) {
+        /* If depth is 0, its the server's certificate. Print the SANs too */
+//        print_san_name("Subject (san)", cert);
+    }
+//    return preverify;
+}
+
 int main(int count, char *strings[]){
     SSL_CTX *ctx;
     int server;
@@ -111,32 +104,17 @@ int main(int count, char *strings[]){
 	char acClientRequest[1024] ={0};
     int bytes, portnum = 44300;
     char * hostname = "127.0.0.1";
-    SSL_library_init();
- 
+    SSL_library_init(); 
     ctx = InitCTX();
     server = OpenConnection(hostname, portnum);
     ssl = SSL_new(ctx);      /* create new SSL connection state */
+    SSL_set_tlsext_host_name(ssl, hostname);
     SSL_set_fd(ssl, server);    /* attach the socket descriptor */
     if ( SSL_connect(ssl) == FAIL )   /* perform the connection */
         ERR_print_errors_fp(stderr);
-    else
-    {
-        char acUsername[16] ={0};
-		char acPassword[16] ={0};
-	    const char *cpRequestMessage = "<Body>\
-	                             <UserName>%s<UserName>\
-								 <Password>%s<Password>\
-								 <\Body>";							 
- 
-        printf("Enter the User Name : ");
-		scanf("%s",acUsername);
-		
-		 printf("\n\nEnter the Password : ");
-		scanf("%s",acPassword);
- 
-        sprintf(acClientRequest, cpRequestMessage, acUsername,acPassword);   /* construct reply */
- 
-        printf("\n\nConnected with %s encryption\n", SSL_get_cipher(ssl));
+    else    {
+//        verify_callback(); 
+//        SSL_CTX_set_verify(ctx, SSL_VERIFY_PEER, NULL);
         ShowCerts(ssl);        /* get any certs */
         SSL_write(ssl,acClientRequest, strlen(acClientRequest));   /* encrypt & send message */
         bytes = SSL_read(ssl, buf, sizeof(buf)); /* get reply & decrypt */
