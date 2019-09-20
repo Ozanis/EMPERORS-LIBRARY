@@ -1,34 +1,76 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <dlfcn.h>
-#include <sys/types.h>          /* See NOTES */
-#include <sys/socket.h>
-#include <linux/in.h>
-#include <errno.h>
+#include <openssl/evp.h>
 #include <openssl/ssl.h>
+#include <openssl/err.h>
+#include <openssl/ecdh.h>
+#include <openssl/pem.h>
 
 
-void load_crypto(){
+const char * pub_key = "/home/max/Projects/TelemetryAgent/cryptkeys/dhkey.pem";
+const char * pub_cert = "/home/max/Projects/TelemetryAgent/cryptkeys/cert.pem";
 
 
-}
-
-
-void init_openssl()
-{
+void init_openssl_library(){
+    SSL_library_init();
     SSL_load_error_strings();
-    OpenSSL_add_ssl_algorithms();
+    }
+
+void ShowCerts(SSL* ssl){
+    X509 *cert;
+    char *line;
+    cout << "getting peer cert" << endl; 
+    cert = SSL_get_peer_certificate(ssl); /* get the server's certificate */
+    if ( cert != NULL )
+    {
+        printf("Server certificates:\n");
+        line = X509_NAME_oneline(X509_get_subject_name(cert), 0, 0);
+        printf("Subject: %s\n", line);
+        free(line);       /* free the malloc'ed string */
+        line = X509_NAME_oneline(X509_get_issuer_name(cert), 0, 0);
+        printf("Issuer: %s\n", line);
+        free(line);       /* free the malloc'ed string */
+        X509_free(cert);     /* free the malloc'ed certificate copy */
+    }
+    else
+        printf("Info: No client certificates configured.\n");
 }
-void cleanup_openssl(){
-    EVP_cleanup();
+ 
+
+void verify_callback(X509_STORE_CTX* x509_ctx, SSL_CTX * ctx){
+    int depth = X509_STORE_CTX_get_error_depth(x509_ctx);
+    int err = X509_STORE_CTX_get_error(x509_ctx);
+    X509 * cert = X509_STORE_CTX_get_current_cert(x509_ctx);
+    X509_NAME* iname = cert ? X509_get_issuer_name(cert) : NULL;
+    X509_NAME* sname = cert ? X509_get_subject_name(cert) : NULL;
+//    print_cn_name("Issuer (cn)", iname);
+//    print_cn_name("Subject (cn)", sname);
+    if(depth == 0) {
+        /* If depth is 0, its the server's certificate. Print the SANs too */
+//        print_san_name("Subject (san)", cert);
+    }
+//    return preverify;
 }
 
-int err;
 
-#define CERTF "/home/max/Projects/ssltest/cert.pem"
-#define KEYF "/home/max/Projects/ssltest/key.pem"
-#define CAFILE "/home/max/Projects/ssltest/cert.pem"
+/*
+SSL_CTX* InitCTX(void){
+    auto * method = SSLv23_method(); 
+    SSL_CTX *ctx;
+    OpenSSL_add_all_algorithms();
+    SSL_load_error_strings();   
+    ctx = SSL_CTX_new(method); 
+    if ( ctx == NULL )
+    {
+        ERR_print_errors_fp(stderr);
+        abort();
+    }
+    return ctx;
+}
+*/
 
+
+
+
+/*
 int verify_callback_server(int ok, X509_STORE_CTX *ctx)
 {
     printf("verify_callback_server.\n");
@@ -195,4 +237,4 @@ int main()
 
     SSL_CTX_free(ctx);
     return 0;
-}
+}*/

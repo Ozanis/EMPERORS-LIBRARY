@@ -6,18 +6,18 @@ Multithreaded Client-server service for collecting telemetry over TLS. Meaning C
 
 <h2>Related works</h2>
 
-* [Python version](https://github.com/Ozanis/sslsock_client_server)
+* [Python version](https://github.com/Ozanis/TelemetryPyAgent)
 
 <h2>Requirements</h2>
 
 * OpenSSL
 
-<h2>Content</h2>
+Script provides:
 
-1 Client-side
-2 Server-side
-3 Bash-script for solving dependencies
-4 Bash daemon set-up
+1. Client-side
+2. Server-side
+3. Bash-script for solving dependencies
+4. Bash daemon set-up
 
 <h2>Explanations</h2>
 
@@ -26,7 +26,7 @@ You need to run  TelemetryAgent/Sservice/config.sh and enter "client" or "server
 
 <h2>Demo</h2>
                                
-<img src="./test/demo.jpg"
+<img src="./test/demo.png"
 alt="Running"
 style="float: left; margin-right: 10px;" />    
                                                                                                    
