@@ -12,6 +12,7 @@
 #include <iostream>
 #include <cstring>
 #include "fcntl.h"
+#include "../util/crypto.h"
 
 
 #define BUFF_SIZE 1024
@@ -28,6 +29,7 @@ class ServerSock{
         ServerSock(const char * addr, uint16_t port);
         ~ServerSock();
         bool listen_wr();
+        bool accept_wr();
 
         int id = 0;
         struct sockaddr_in addrStruct;
@@ -96,21 +98,21 @@ Connector :: Connector(int sock, uint16_t port){
     this->addrStruct.sin_port = htons(port);
 
     this->id = accept(sock, (struct sockaddr *)&this->addrStruct, (socklen_t*)&this->addrStruct);
+    
 //  cout << fcntl(this->id, F_SETFL, O_NONBLOCK) << endl;
     if(this->id < 0) cerr << "Acception  error" << endl;
     else cout << "Sock created: " << this->id << endl;
-
 
     char * addr = inet_ntoa(this->addrStruct.sin_addr);
     string s(addr);
     cout << "Sock initialized " << s << " " << port << endl;
 }
 
-
+/*
 bool Connector :: recv_wr(){
-    return recv(this->id, this->buffer, sizeof(this->buffer), 0) > 0;
+//  return recv(this->id, this->buffer, sizeof(this->buffer), 0) > 0;
 }
-
+*/
 
 bool Connector :: is_alive(){
     struct pollfd fd;
@@ -151,6 +153,8 @@ bool Connector :: is_alive(){
 Connector :: ~Connector(){
     close(this->id);
 }
+
+
 
 
 #endif //SOCK_WRAPPER_H

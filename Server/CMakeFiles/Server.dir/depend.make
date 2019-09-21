@@ -5,5 +5,7 @@ Server/CMakeFiles/Server.dir/Server.cpp.o: Server/Server.cpp
 Server/CMakeFiles/Server.dir/Server.cpp.o: Server/asyncServer.h
 Server/CMakeFiles/Server.dir/Server.cpp.o: Server/handler.h
 Server/CMakeFiles/Server.dir/Server.cpp.o: Server/linkedlist.h
+Server/CMakeFiles/Server.dir/Server.cpp.o: SocketWrapper/CryptServerWrap.h
 Server/CMakeFiles/Server.dir/Server.cpp.o: SocketWrapper/ServerWrap.h
+Server/CMakeFiles/Server.dir/Server.cpp.o: util/crypto.h
 

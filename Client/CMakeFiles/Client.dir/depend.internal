@@ -4,5 +4,7 @@
 Client/CMakeFiles/Client.dir/Client.cpp.o
  /home/max/Projects/TelemetryAgent/Client/Client.cpp
  /home/max/Projects/TelemetryAgent/SocketWrapper/ClientWrap.h
+ /home/max/Projects/TelemetryAgent/SocketWrapper/CryptClientWrap.h
+ /home/max/Projects/TelemetryAgent/util/crypto.h
  /home/max/Projects/TelemetryAgent/util/memory.h
  /home/max/Projects/TelemetryAgent/util/proc.h

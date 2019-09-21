@@ -3,37 +3,17 @@
 #include <openssl/err.h>
 #include <openssl/ecdh.h>
 #include <openssl/pem.h>
+#include <iostream>
+
+
+using std :: cerr;
+using std :: cout;
+using std :: endl;
 
 
 const char * pub_key = "/home/max/Projects/TelemetryAgent/cryptkeys/dhkey.pem";
 const char * pub_cert = "/home/max/Projects/TelemetryAgent/cryptkeys/cert.pem";
 
-
-void init_openssl_library(){
-    SSL_library_init();
-    SSL_load_error_strings();
-    }
-
-void ShowCerts(SSL* ssl){
-    X509 *cert;
-    char *line;
-    cout << "getting peer cert" << endl; 
-    cert = SSL_get_peer_certificate(ssl); /* get the server's certificate */
-    if ( cert != NULL )
-    {
-        printf("Server certificates:\n");
-        line = X509_NAME_oneline(X509_get_subject_name(cert), 0, 0);
-        printf("Subject: %s\n", line);
-        free(line);       /* free the malloc'ed string */
-        line = X509_NAME_oneline(X509_get_issuer_name(cert), 0, 0);
-        printf("Issuer: %s\n", line);
-        free(line);       /* free the malloc'ed string */
-        X509_free(cert);     /* free the malloc'ed certificate copy */
-    }
-    else
-        printf("Info: No client certificates configured.\n");
-}
- 
 
 void verify_callback(X509_STORE_CTX* x509_ctx, SSL_CTX * ctx){
     int depth = X509_STORE_CTX_get_error_depth(x509_ctx);
@@ -51,22 +31,56 @@ void verify_callback(X509_STORE_CTX* x509_ctx, SSL_CTX * ctx){
 }
 
 
-/*
-SSL_CTX* InitCTX(void){
-    auto * method = SSLv23_method(); 
-    SSL_CTX *ctx;
+class TLS_proto{
+    public:
+        TLS_proto();
+        ~TLS_proto();
+        void ShowCerts();
+        SSL * ssl;
+        SSL_CTX * ctx;
+};
+
+
+TLS_proto :: TLS_proto(){
+    SSL_library_init();
+    SSL_load_error_strings();
     OpenSSL_add_all_algorithms();
     SSL_load_error_strings();   
-    ctx = SSL_CTX_new(method); 
-    if ( ctx == NULL )
+    this->ctx = SSL_CTX_new(SSLv23_method()); 
+    if (this->ctx == nullptr)
     {
         ERR_print_errors_fp(stderr);
         abort();
+        cerr << "Unable to create client ctx" << endl;
     }
-    return ctx;
-}
-*/
 
+}
+
+
+void TLS_proto :: ShowCerts(){
+    X509 * cert;
+    char * line;
+    cout << "getting peer cert" << endl; 
+    cert = SSL_get_peer_certificate(this->ssl); /* get the server's certificate */
+    if ( cert != nullptr ){
+        line = X509_NAME_oneline(X509_get_subject_name(cert), 0, 0);
+        cout  << "Server certificates: " << line << endl;
+        cout << "Subject: " << line << endl;
+        free(line);       /* free the malloc'ed string */
+        line = X509_NAME_oneline(X509_get_issuer_name(cert), 0, 0);
+        cout << "Issuer: " << line << endl;;
+        free(line);       /* free the malloc'ed string */
+        X509_free(cert);     /* free the malloc'ed certificate copy */
+    }
+    else
+        printf("Info: No client certificates configured.\n");
+}
+ 
+
+TLS_proto :: ~TLS_proto(){
+    SSL_free(this->ssl);
+    SSL_CTX_free(this->ctx);
+}
 
 
 

@@ -56,6 +56,7 @@ SSL_CTX* InitCTX(void){
         ERR_print_errors_fp(stderr);
         abort();
     }
+   
     return ctx;
 }
  
@@ -106,8 +107,8 @@ int main(int count, char *strings[]){
     char * hostname = "127.0.0.1";
     SSL_library_init(); 
     ctx = InitCTX();
+    SSL_new(ctx);      /* create new SSL connection state */
     server = OpenConnection(hostname, portnum);
-    ssl = SSL_new(ctx);      /* create new SSL connection state */
     SSL_set_tlsext_host_name(ssl, hostname);
     SSL_set_fd(ssl, server);    /* attach the socket descriptor */
     if ( SSL_connect(ssl) == FAIL )   /* perform the connection */

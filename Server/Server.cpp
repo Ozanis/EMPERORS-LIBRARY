@@ -1,8 +1,11 @@
 #include "asyncServer.h"
+#include "thread"
+#include "mutex"
 
 
 using std :: thread;
 using std :: mutex;
+using std :: lock_guard;
 
 
 static const char * my_addr = "127.0.0.1";
@@ -18,6 +21,7 @@ void isRoot(){
 
 void listen_cycle(AsyncServer * server){
     mutex mtx;
+    lock_guard<mutex> lock(mtx);
     while(1){
         if (server->listen_wr()){
             cout << "Adding connection" << endl;

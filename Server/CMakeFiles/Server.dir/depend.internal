@@ -6,4 +6,6 @@ Server/CMakeFiles/Server.dir/Server.cpp.o
  /home/max/Projects/TelemetryAgent/Server/asyncServer.h
  /home/max/Projects/TelemetryAgent/Server/handler.h
  /home/max/Projects/TelemetryAgent/Server/linkedlist.h
+ /home/max/Projects/TelemetryAgent/SocketWrapper/CryptServerWrap.h
  /home/max/Projects/TelemetryAgent/SocketWrapper/ServerWrap.h
+ /home/max/Projects/TelemetryAgent/util/crypto.h

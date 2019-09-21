@@ -1,8 +1,6 @@
 #ifndef ASYNC_H
 #define ASYNC_H
 
-#include <thread>
-#include <mutex>
 #include "handler.h"
 
 
@@ -10,11 +8,9 @@ using std :: cout;
 using std :: endl;
 using std :: cerr;
 using std :: string;
-using std :: thread;
-using std :: mutex;
 
 
-class Server : public Handler, public  ServerSock{
+class Server : public Handler, public ServerSock{
     public:
        explicit Server(const char * addr, uint16_t port) : Handler(port), ServerSock(addr, port){};
        ~Server() = default;
@@ -27,7 +23,8 @@ class Server : public Handler, public  ServerSock{
 void Server :: recive(Node * connection){
     cout << "Start to recive" << endl;
 //    if(connection->is_alive()){
-      if (connection->recv_wr()) display(connection);
+    
+    if (connection->recv_wr()) display(connection);
     else{
         cerr << "Dead connection "
 //        << getpeername(connection->id , (struct sockaddr*)&connection->addrStruct, (socklen_t*)sizeof(connection->addrStruct))

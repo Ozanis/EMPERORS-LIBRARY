@@ -1,16 +1,16 @@
 #ifndef LINKED_LIST_H
 #define LINKED_LIST_H
 
-#include "../SocketWrapper/ServerWrap.h"
+#include "../SocketWrapper/CryptServerWrap.h"
 
 
 using std :: cout;
 using std :: endl;
 
 
-class Node : public Connector{
+class Node : public TLS_session{
     public:
-        explicit Node(int id, uint16_t port) : Connector(id, port){};
+        explicit Node(int id, uint16_t port) : TLS_session(id, port){};
         void add(int id, uint16_t port);
         ~Node();
 

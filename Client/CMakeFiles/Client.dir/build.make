@@ -79,6 +79,8 @@ Client_EXTERNAL_OBJECTS =
 
 Client/Client: Client/CMakeFiles/Client.dir/Client.cpp.o
 Client/Client: Client/CMakeFiles/Client.dir/build.make
+Client/Client: /usr/lib/libcrypto.so
+Client/Client: /usr/lib/libssl.so
 Client/Client: Client/CMakeFiles/Client.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/max/Projects/TelemetryAgent/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable Client"
 	cd /home/max/Projects/TelemetryAgent/Client && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/Client.dir/link.txt --verbose=$(VERBOSE)

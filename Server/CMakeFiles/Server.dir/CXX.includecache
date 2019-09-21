@@ -9,12 +9,12 @@
 /home/max/Projects/TelemetryAgent/Server/Server.cpp
 asyncServer.h
 /home/max/Projects/TelemetryAgent/Server/asyncServer.h
+thread
+/home/max/Projects/TelemetryAgent/Server/thread
+mutex
+/home/max/Projects/TelemetryAgent/Server/mutex
 
 /home/max/Projects/TelemetryAgent/Server/asyncServer.h
-thread
--
-mutex
--
 handler.h
 /home/max/Projects/TelemetryAgent/Server/handler.h
 
@@ -23,6 +23,10 @@ linkedlist.h
 /home/max/Projects/TelemetryAgent/Server/linkedlist.h
 
 /home/max/Projects/TelemetryAgent/Server/linkedlist.h
+../SocketWrapper/CryptServerWrap.h
+/home/max/Projects/TelemetryAgent/SocketWrapper/CryptServerWrap.h
+
+/home/max/Projects/TelemetryAgent/SocketWrapper/CryptServerWrap.h
 ../SocketWrapper/ServerWrap.h
 /home/max/Projects/TelemetryAgent/SocketWrapper/ServerWrap.h
 
@@ -49,4 +53,20 @@ cstring
 -
 fcntl.h
 /home/max/Projects/TelemetryAgent/SocketWrapper/fcntl.h
+../util/crypto.h
+/home/max/Projects/TelemetryAgent/util/crypto.h
+
+/home/max/Projects/TelemetryAgent/util/crypto.h
+openssl/evp.h
+-
+openssl/ssl.h
+-
+openssl/err.h
+-
+openssl/ecdh.h
+-
+openssl/pem.h
+-
+iostream
+-
 

@@ -1,7 +1,7 @@
-#include "../SocketWrapper/ClientWrap.h"
+#include "../SocketWrapper/CryptClientWrap.h"
 #include "../util/proc.h"
 #include "../util/memory.h"
-#include "signal.h"
+#include "csignal"
 
 
 static const uint16_t to_port = 44301;
@@ -12,7 +12,7 @@ static const char * to_addr = "127.0.0.1";
 
 int main(){
     string data;
-    ClientSock client(from_addr, from_port, to_addr, to_port);
+    cryptClient client(from_addr, from_port, to_addr, to_port);
     while(gethostbyname(to_addr)){
         data = "Send: | " +  cpu_num() + " | " + get_cpu() + " | " + process_mem_usage() + "|" + physical_mem_usage() + " |";
         cout << data << endl;

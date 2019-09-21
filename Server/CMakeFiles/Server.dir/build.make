@@ -79,6 +79,8 @@ Server_EXTERNAL_OBJECTS =
 
 Server/Server: Server/CMakeFiles/Server.dir/Server.cpp.o
 Server/Server: Server/CMakeFiles/Server.dir/build.make
+Server/Server: /usr/lib/libcrypto.so
+Server/Server: /usr/lib/libssl.so
 Server/Server: Server/CMakeFiles/Server.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/max/Projects/TelemetryAgent/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable Server"
 	cd /home/max/Projects/TelemetryAgent/Server && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/Server.dir/link.txt --verbose=$(VERBOSE)

@@ -7,14 +7,14 @@
 #IncludeRegexTransform: 
 
 /home/max/Projects/TelemetryAgent/Client/Client.cpp
-../SocketWrapper/ClientWrap.h
-/home/max/Projects/TelemetryAgent/SocketWrapper/ClientWrap.h
+../SocketWrapper/CryptClientWrap.h
+/home/max/Projects/TelemetryAgent/SocketWrapper/CryptClientWrap.h
 ../util/proc.h
 /home/max/Projects/TelemetryAgent/util/proc.h
 ../util/memory.h
 /home/max/Projects/TelemetryAgent/util/memory.h
-signal.h
-/home/max/Projects/TelemetryAgent/Client/signal.h
+csignal
+/home/max/Projects/TelemetryAgent/Client/csignal
 
 /home/max/Projects/TelemetryAgent/SocketWrapper/ClientWrap.h
 sys/types.h
@@ -36,6 +36,26 @@ unistd.h
 iostream
 -
 cstring
+-
+
+/home/max/Projects/TelemetryAgent/SocketWrapper/CryptClientWrap.h
+../util/crypto.h
+/home/max/Projects/TelemetryAgent/util/crypto.h
+../SocketWrapper/ClientWrap.h
+/home/max/Projects/TelemetryAgent/SocketWrapper/ClientWrap.h
+
+/home/max/Projects/TelemetryAgent/util/crypto.h
+openssl/evp.h
+-
+openssl/ssl.h
+-
+openssl/err.h
+-
+openssl/ecdh.h
+-
+openssl/pem.h
+-
+iostream
 -
 
 /home/max/Projects/TelemetryAgent/util/memory.h

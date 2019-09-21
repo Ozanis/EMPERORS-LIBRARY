@@ -24,7 +24,6 @@ class ClientSock{
     public:
         ClientSock(const char * from_addr, uint16_t from_port, const char * to_addr, uint16_t to_port);
         ~ClientSock();
-        void send_wr(const string & data);
         int id = 0;
         struct sockaddr_in Client;
         struct sockaddr_in Server;
@@ -52,14 +51,6 @@ ClientSock :: ClientSock(const char * from_addr, uint16_t from_port, const char 
     else cout << "Connection established" << endl;
 }
 
-
-void ClientSock :: send_wr(const string & data){
-    size_t bufsize = data.length();
-    char * message = new char[bufsize]{0};
-    strcpy(message, data.c_str());
-    if(!send(this->id, message, bufsize, 0)) cerr << "Unable to send" << endl;
-    delete(message);
-}
 
 
 ClientSock :: ~ClientSock(){
