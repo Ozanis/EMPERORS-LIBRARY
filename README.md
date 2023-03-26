@@ -4,10 +4,6 @@
 
 Multithreaded Client-server service for collecting telemetry over TLS. Meaning CPU load, num of cores, RAM, HDD.
 
-<h2>Related works</h2>
-
-* [Python version](https://github.com/Ozanis/TelemetryPyAgent)
-
 <h2>Requirements</h2>
 
 * OpenSSL
